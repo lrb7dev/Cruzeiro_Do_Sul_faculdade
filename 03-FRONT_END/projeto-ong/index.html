@@ -30,22 +30,44 @@
 <body>
     <!-- Cabeçalho e Menu de Navegação -->
     <header>
-        <h1>ONG Inclusão IA</h1>
-        <p>Inclusão Social através da Inteligência Artificial</p>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Inicial</a></li>
-                <li><a href="/projetos-sociais.html">Projetos Sociais</a></li>
-                <li><a href="/cadastro.html">Cadastro</a></li>
-            </ul>
-        </nav>
+        <div class="header-conteudo">
+            <div>
+                <h1>ONG Inclusão IA</h1>
+                <p>Inclusão Social através da Inteligência Artificial</p>
+            </div>
+
+            <nav>
+                <button class="hamburger" id="hamburger-menu" aria-label="Abrir menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+
+                <ul id="menu-lista" class="menu-lista">
+                    <li><a href="/index.html">Inicial</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Sobre Nós ▼</a>
+                        <div class="dropdown-conteudo">
+                            <a href="/missao.html">Missão</a>
+                            <a href="/equipe.html">Equipe</a>
+                            <a href="/contato.html">Contato</a>
+                        </div>
+                    </li>
+                    <li><a href="/projetos-sociais.html">Projetos Sociais</a></li>
+                    <li><a href="/cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
         <!-- Página Inicial -->
         <section id="inicial">
             <h2>Bem-vindo à ONG Inclusão IA</h2>
-            <img src="img/pagina-inicial.webp" alt="Ilustração de um grupo diverso de pessoas, incluindo crianças, jovens e idosos, sentados ao redor de uma mesa e interagindo com tablets. Ao fundo, um mapa do Brasil e uma bandeira brasileira. No centro da imagem, brilhando, há um coração com um circuito eletrônico dentro, simbolizando inteligência artificial, conectividade e apoio no Brasil." class="img-responsiva" loading="lazy" title="**ONG Inclusão IA:** Inteligência Artificial a serviço da Inclusão Digital e Social no Brasil." >
+            <img src="img/pagina-inicial.webp"
+                alt="Ilustração de um grupo diverso de pessoas, incluindo crianças, jovens e idosos, sentados ao redor de uma mesa e interagindo com tablets. Ao fundo, um mapa do Brasil e uma bandeira brasileira. No centro da imagem, brilhando, há um coração com um circuito eletrônico dentro, simbolizando inteligência artificial, conectividade e apoio no Brasil."
+                class="img-responsiva" loading="lazy"
+                title="**ONG Inclusão IA:** Inteligência Artificial a serviço da Inclusão Digital e Social no Brasil.">
             <figcaption>
                 Imagem: Copilot3D
             </figcaption>
@@ -68,9 +90,12 @@
             <h3>Nossos Valores</h3>
             <ul>
                 <li><strong>Ética:</strong> Priorizamos o uso <span class="destaque">responsável</span> da IA</li>
-                <li><strong>Inclusão:</strong> Trabalhamos para que <span class="destaque">todos se beneficiem</span> da tecnologia</li>
-                <li><strong>Transparência:</strong> Nossos processos e algoritmos são <span class="destaque">abertos e auditáveis</span></li>
-                <li><strong>Colaboração:</strong> Acreditamos no poder das <span class="destaque">parcerias</span> para gerar <span class="destaque">impacto</span></li>
+                <li><strong>Inclusão:</strong> Trabalhamos para que <span class="destaque">todos se beneficiem</span> da
+                    tecnologia</li>
+                <li><strong>Transparência:</strong> Nossos processos e algoritmos são <span class="destaque">abertos e
+                        auditáveis</span></li>
+                <li><strong>Colaboração:</strong> Acreditamos no poder das <span class="destaque">parcerias</span> para
+                    gerar <span class="destaque">impacto</span></li>
             </ul>
         </section>
     </main>
@@ -84,6 +109,8 @@
         <p><strong>Endereço:</strong> Rua da Inovação, 123 - Minas Gerais, MG</p>
         <p>&copy; 2025 ONG Inclusão IA. Todos os direitos reservados.</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

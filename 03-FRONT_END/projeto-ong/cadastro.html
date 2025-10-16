@@ -30,16 +30,34 @@
 <body>
     <!-- Cabeçalho e Menu de Navegação -->
     <header>
-        <h1>ONG Inclusão IA</h1>
-        <p>Inclusão Social através da Inteligência Artificial</p>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Inicial</a></li>
-                <li><a href="/projetos-sociais.html">Projetos Sociais</a></li>
-                <li><a href="/cadastro.html">Cadastro</a></li>
-            </ul>
-            </ul>
-        </nav>
+        <div class="header-conteudo">
+            <div>
+                <h1>ONG Inclusão IA</h1>
+                <p>Inclusão Social através da Inteligência Artificial</p>
+            </div>
+
+            <nav>
+                <button class="hamburger" id="hamburger-menu" aria-label="Abrir menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+
+                <ul id="menu-lista" class="menu-lista">
+                    <li><a href="/index.html">Inicial</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Sobre Nós ▼</a>
+                        <div class="dropdown-conteudo">
+                            <a href="/missao.html">Missão</a>
+                            <a href="/equipe.html">Equipe</a>
+                            <a href="/contato.html">Contato</a>
+                        </div>
+                    </li>
+                    <li><a href="/projetos-sociais.html">Projetos Sociais</a></li>
+                    <li><a href="/cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>

@@ -1,3 +1,35 @@
+//MENU RESPONSIVO
+document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger-menu');
+        const menuLista = document.getElementById('menu-lista');
+
+        hamburger.addEventListener('click', function() {
+            // Alterna a classe 'active' para mostrar/esconder o menu
+            menuLista.classList.toggle('active');
+            
+            // Alterna a classe 'is-active' para animar o botão hambúrguer
+            hamburger.classList.toggle('is-active');
+
+            // Alterna o atributo aria-expanded para acessibilidade
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            hamburger.setAttribute('aria-label', !isExpanded ? 'Fechar menu' : 'Abrir menu');
+        });
+
+        // Adiciona funcionalidade de fechar o menu ao clicar em um link
+        const links = menuLista.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    menuLista.classList.remove('active');
+                    hamburger.classList.remove('is-active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    hamburger.setAttribute('aria-label', 'Abrir menu');
+                }
+            });
+        });        
+    });
+
 //CADASTRO
 function mascaraCPF(campo) {
             // Remove tudo que não é número

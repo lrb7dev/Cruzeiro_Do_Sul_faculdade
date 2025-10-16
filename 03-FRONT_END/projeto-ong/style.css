@@ -5,14 +5,22 @@
 */
 :root {
     /* Paleta de Cores */
-    --cor-primaria: #007bff; /* Azul vibrante para ações principais */
-    --cor-secundaria: #6c757d; /* Cinza para elementos secundários */
-    --cor-destaque: rgba(43, 238, 43, 0.781); /*para alguma ação de destaque nos textos*/
-    --cor-fundo: #f8f9fa; /* Fundo claro */
-    --cor-texto: #343a40; /* Texto escuro */
-    --cor-destaque: #28a745; /* Verde para destaque/sucesso */
-    --cor-link-hover: #0d81ec;
-    --cor-link-nav-hover: #d8d8e9;
+    --cor-primaria: #007bff;
+    /* Azul vibrante para ações principais */
+    --cor-secundaria: #6c757d;
+    /* Cinza para elementos secundários */
+    --cor-destaque: rgba(43, 238, 43, 0.781);
+    /*para alguma ação de destaque nos textos*/
+    --cor-fundo: #f8f9fa;
+    /* Fundo claro */
+    --cor-texto: #343a40;
+    /* Texto destaque */
+    --cor-destaque: #28a745;
+    /* Verde para destaque - sucesso */
+    --cor-link-hover: #97ee0b;
+    /*Destaque link*/
+    --cover-links: rgba(6, 22, 6, 0.733);
+    /*Cor link*/
 
     /* Tamanhos de Fonte */
     --fonte-tamanho-base: 16px;
@@ -22,27 +30,36 @@
     --fonte-destaque: 1.15rem;
 
     /* Espaçamentos modulares*/
-    --espacamento-xs: 0.5rem;   /* 8px */
-    --espacamento-sm: 1rem;     /* 16px */
-    --espacamento-md: 1.5rem;   /* 24px */
-    --espacamento-lg: 2rem;     /* 32px */
-    --espacamento-xl: 3rem;     /* 48px */
-    --espacamento-xxl: 4rem;    /* 64px */
+    --espacamento-xs: 0.5rem;
+    /* 8px */
+    --espacamento-sm: 1rem;
+    /* 16px */
+    --espacamento-md: 1.5rem;
+    /* 24px */
+    --espacamento-lg: 2rem;
+    /* 32px */
+    --espacamento-xl: 3rem;
+    /* 48px */
+    --espacamento-xxl: 4rem;
+    /* 64px */
 
     /* Configuração do Grid Customizado de 12 Colunas */
     --grid-colunas: 12;
-    --grid-gap: var(--espacamento-md); /*rem para tamanho da fonte raiz*/
+    --grid-gap: var(--espacamento-md);
+    /*rem para tamanho da fonte raiz*/
 }
 
 /* reset */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /*aplicando largura e altura em tudo da box, mais prático!*/
+    box-sizing: border-box;
+    /*aplicando largura e altura em tudo da box, mais prático!*/
 }
 
 html {
-    scroll-behavior: smooth; /*rolar a página de forma animada e gradual*/
+    scroll-behavior: smooth;
+    /*rolar a página de forma animada e gradual*/
     font-size: var(--fonte-tamanho-base);
 }
 
@@ -51,13 +68,15 @@ body {
     line-height: 1.6;
     color: var(--cor-texto);
     background-color: var(--cor-fundo);
-    min-height: 100vh; /*100% da altura da janela de visualização.*/
+    min-height: 100vh;
+    /*100% da altura da janela de visualização*/
 }
 
 a {
     color: var(--cor-primaria);
     text-decoration: none;
-    transition: color 0.3s ease; /*mudança de cor no link de forma suave e animada*/
+    transition: color 0.3s ease;
+    /*mudança de cor no link de forma suave e animada*/
 }
 
 a:hover {
@@ -69,14 +88,26 @@ ul {
     margin-left: var(--espacamento-lg);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     margin-bottom: var(--espacamento-sm);
     line-height: 1.2;
 }
 
-h1 { font-size: var(--fonte-titulo-principal); color: var(--cor-primaria); }
-h2 { font-size: var(--fonte-titulo-secao); }
-h3 { font-size: var(--fonte-subtitulo); color: var(--cor-destaque); }
+h1 {
+    font-size: var(--fonte-titulo-principal);
+    color: var(--cor-primaria);
+}
+
+h2 {
+    font-size: var(--fonte-titulo-secao);
+}
+
+h3 {
+    font-size: var(--fonte-subtitulo);
+    color: var(--cor-destaque);
+}
 
 p {
     margin-bottom: var(--espacamento-sm);
@@ -85,17 +116,20 @@ p {
 .img-responsiva {
     max-width: 100%;
     height: auto;
-    display: block; /* Remove o espaço extra abaixo da imagem */
-    margin: 0 auto var(--espacamento-sm) auto; /* Centraliza e adiciona margem inferior */
-    border-radius: 8px; /* Borda suave */
+    display: block;
+    /* Remove o espaço extra abaixo da imagem */
+    margin: 0 auto var(--espacamento-sm) auto;
+    /* Centraliza e adiciona margem inferior */
+    border-radius: 8px;
+    /* Borda suave */
 }
 
 /*destaque*/
 .destaque {
-  color: var(--cor-destaque);
-  font-size: var(--fonte-destaque);
-  font-weight: bolder;
-  text-transform: uppercase;
+    color: var(--cor-destaque);
+    font-size: var(--fonte-destaque);
+    font-weight: bolder;
+    text-transform: uppercase;
 }
 
 /*
@@ -111,10 +145,14 @@ body {
         "header"
         "main"
         "footer";
-    grid-template-rows: auto 1fr auto; /* O 'main' ocupa o espaço restante */
+    grid-template-rows: auto 1fr auto;
+    /* O 'main' ocupa o espaço restante */
 }
 
-header { grid-area: header; }
+header {
+    grid-area: header;
+}
+
 main {
     grid-area: main;
     padding: var(--espacamento-sm);
@@ -123,7 +161,10 @@ main {
     margin: 0 auto;
     width: 100%;
 }
-footer { grid-area: footer; }
+
+footer {
+    grid-area: footer;
+}
 
 
 /*
@@ -143,8 +184,18 @@ footer { grid-area: footer; }
 
 /* Classes de colunas para ocupar N colunas (col-1 a col-12) */
 /* Por padrão (mobile first), todos ocupam 12 colunas */
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
-.col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
     grid-column: span 12;
 }
 
@@ -161,36 +212,88 @@ header {
     text-align: center;
 }
 
-header h1, header p {
+header h1,
+header p {
     padding: 0 var(--espacamento-sm);
 }
 
-nav {
-    margin-top: var(--espacamento-sm);
+.header-conteudo {
+    display: flex;
+    justify-content: space-between;
+    /* Alinha logo e nav em extremidades opostas */
+    align-items: center;
+    max-width: 1200px;
+    /* Limita largura máxima para telas grandes */
+    margin: 0 auto;
 }
 
 nav ul {
-    /* Utiliza Flexbox para alinhar os itens do menu horizontalmente */
-    display: flex;
-    flex-direction: column; /* Padrão Mobile: Empilhado */
-    justify-content: center;
-    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 0.5rem; /* Espaçamento entre os links empilhados */
+    /*display: flex; /* Exibe os itens lado a lado no desktop */
 }
 
 nav ul li a {
-    color: white;
-    padding: 0.5rem 1rem;
-    display: block; /* Torna o link um bloco para melhor área de clique */
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    text-decoration: none;
+    color: var(--cover-links);
+    padding: 10px 15px;
+    display: block;
 }
 
-nav ul li a:hover {
-    background-color: var(--cor-link-nav-hover);
+/* Estilos do Dropdown */
+.dropdown {
+    position: relative;
+    /* Container para o conteúdo dropdown */
+}
+
+.dropdown-conteudo {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-conteudo a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-conteudo a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-conteudo {
+    display: block;
+    /* Mostra o dropdown no hover do desktop */
+}
+
+/* Estilos do Botão Hambúrguer (Inicialmente Escondido no Desktop) */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 1001;
+    /* Garante que fique acima do menu */
+}
+
+.bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: all 0.3s ease-in-out;
 }
 
 /* Rodapé */
@@ -234,10 +337,11 @@ footer a {
     margin-bottom: var(--espacamento-lg);
 }
 
-/* Layout especial para a seção de valores (ex: lista não ordenada) */
+/* Layout especial para a seção de valores */
 #inicial ul:last-of-type {
     display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+    flex-wrap: wrap;
+    /* Permite que os itens quebrem a linha */
     list-style: none;
     margin: 0;
     padding: 0;
@@ -250,9 +354,12 @@ footer a {
     border: 1px solid var(--cor-primaria);
     border-radius: 6px;
     padding: var(--espacamento-sm);
-    flex-grow: 1; /* Cresce para ocupar espaço em telas maiores */
-    flex-basis: 100%; /* Padrão mobile: ocupa 100% da largura */
-    max-width: 300px; /* Limite de largura para não ficar muito esticado */
+    flex-grow: 1;
+    /* Cresce para ocupar espaço em telas maiores */
+    flex-basis: 100%;
+    /* Padrão mobile: ocupa 100% da largura */
+    max-width: 300px;
+    /* Limite de largura para não ficar muito esticado */
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
@@ -271,11 +378,13 @@ footer a {
 
 #cadastro {
     padding-top: var(--espacamento-lg);
-    max-width: 800px; /* Limita a largura do formulário para melhor leitura */
+    max-width: 800px;
+    /* Limita a largura do formulário para melhor leitura */
     margin: 0 auto;
 }
 
-#cadastro h2, #cadastro p {
+#cadastro h2,
+#cadastro p {
     text-align: center;
 }
 
@@ -305,15 +414,28 @@ legend {
 
 /*
 --------------------------------------------------------------------------
+ PADRÃO PARA PÁGINAS EM CONSTRUÇÃO
+--------------------------------------------------------------------------
+*/
+#pg-construcao p {
+    color: var(--cor-secundaria);
+    text-align: center;
+    margin-top: var(--espacamento-md);
+}
+
+/*
+--------------------------------------------------------------------------
  APLICAÇÃO DO CSS GRID DENTRO DO FORMULÁRIO
  Cria um grid de 12 colunas para organizar os campos (Labels e Inputs)
 --------------------------------------------------------------------------
 */
+
 .form-group {
     /* Define o container para labels e inputs */
     display: grid;
     /* 12 colunas, mas vamos usá-lo principalmente para alinhamento */
-    grid-template-columns: 1fr; /* Padrão Mobile: 1 coluna */
+    grid-template-columns: 1fr;
+    /* Padrão Mobile: 1 coluna */
     gap: 0.5rem 1rem;
 }
 
@@ -335,8 +457,10 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Foco Azul Suave */
-    outline: none; /* Remove o contorno padrão do navegador */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    /* Foco Azul Suave */
+    outline: none;
+    /* Remove o contorno padrão do navegador */
 }
 
 /* Ajustes para Rádios e Checkboxes (Flexbox) */
@@ -368,7 +492,7 @@ form button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    
+
     padding: 1rem 1.5rem;
     font-size: 1rem;
     font-weight: bold;
@@ -377,12 +501,13 @@ form button {
     border-radius: 6px;
     margin-right: var(--espacamento-sm);
     transition: background-color 0.3s ease, opacity 0.3s ease;
-    width: 100%; /* Mobile: Ocupam 100% */
+    width: 100%;
+    /* Mobile: Ocupam 100% */
     margin-bottom: var(--espacamento-sm);
 }
 
 form button[type="submit"] {
-    background-color: var(--cor-destaque); /* Verde para Ação Principal */
+    background-color: var(--cor-destaque);
     color: white;
 }
 
@@ -391,7 +516,7 @@ form button[type="submit"]:hover {
 }
 
 form button[type="reset"] {
-    background-color: var(--cor-secundaria); /* Cinza para Limpar */
+    background-color: var(--cor-secundaria);
     color: white;
 }
 
@@ -402,7 +527,8 @@ form button[type="reset"]:hover {
 /* Container Flex para os botões em telas maiores */
 .button-container {
     display: flex;
-    flex-direction: column; /* Padrão Mobile: empilhados */
+    flex-direction: column;
+    /* Padrão Mobile: empilhados */
     gap: var(--espacamento-sm);
     margin-top: var(--espacamento-sm);
 }
@@ -413,47 +539,100 @@ form button[type="reset"]:hover {
  Mobile First (padrão é para telas pequenas)
 --------------------------------------------------------------------------
 */
-
-/* 1. Telas Pequenas (sm) - 576px */
-@media (min-width: 576px) {
-    /* Ajuste na navegação: Itens lado a lado */
-    nav ul {
-        flex-direction: row;
-        gap: 1rem;
+/*1. Telas pequenas com Menu Hamburguer*/
+@media (max-width: 767px) {
+    .header-conteudo {
+        flex-wrap: wrap;
     }
 
-    /* Colunas no Grid Customizado para sm */
-    .col-sm-6 { grid-column: span 6; } /* 2 colunas */
-} 
+    /* Exibe o hambúrguer no mobile */
+    .hamburger {
+        display: block;
+        /* Alinha o botão hambúrguer no mobile */
+        margin-left: auto;
+    }
 
-/* 2. Tablets (md) - 768px */
+    /* Oculta o menu de navegação por padrão no mobile */
+    .menu-lista {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        /* Links um abaixo do outro */
+        background-color: #fff;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Classe ativada pelo JavaScript para mostrar o menu */
+    .menu-lista.active {
+        display: flex;
+    }
+
+    .menu-lista li {
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Dropdown no Mobile */
+    .dropdown-conteudo {
+        position: static;
+        box-shadow: none;
+        background-color: #f0f0f0;
+    }
+}
+
+
+/* 2. Mostra MENU completo para telas de 768px (Tablets) para cima*/
 @media (min-width: 768px) {
-    /* Ajuste no cabeçalho */
-    header {
-        text-align: left;
-        padding: var(--espacamento-sm) var(--espacamento-lg);
-        display: flex; /* Flexbox para alinhar H1/P e NAV */
-        justify-content: space-between;
-        align-items: center;
+
+    /* Oculta o hambúrguer completamente */
+    .hamburger {
+        display: none !important;
     }
 
-    header div {
-        /* Container para H1 e P */
-        padding: 0;
+    /* Exibe a lista do menu de navegação */
+    .menu-lista {
+        display: flex !important;
+        /* Força a exibição na horizontal */
+        position: static !important;
+        /* Remove posicionamento absoluto de mobile */
+        width: auto !important;
+        /* Largura automática (não 100%) */
+        background: none !important;
+        /* Remove background extra */
+        box-shadow: none !important;
+        /* Remove a sombra do mobile */
     }
 
-    nav {
-        margin-top: 0;
+    nav ul li a {
+        color: var(--cor-fundo);
     }
 
-    /* Colunas no Grid Customizado para md */
-    .col-md-4 { grid-column: span 4; } /* 3 colunas */
-    .col-md-6 { grid-column: span 6; }
-    .col-md-8 { grid-column: span 8; }
+    .menu-lista li {
+        border-bottom: none;
+        /* Remove a borda do mobile */
+    }
+
+    /* Dropdown no Desktop: Voltar à exibição normal */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-conteudo {
+        position: absolute;
+    }
+
+    .dropdown:hover .dropdown-conteudo {
+        display: block;
+    }
 }
 
 /* 3. Desktops Médios (lg) - 992px */
 @media (min-width: 992px) {
+
     /* Aumenta o espaçamento geral */
     main {
         padding: var(--espacamento-lg);
@@ -466,31 +645,45 @@ form button[type="reset"]:hover {
     | que a imagem (100% de largura) ocupe sua linha e o texto venha abaixo.
     |----------------------------------------------------------
     */
-    #inicial, #projetos {
+    #inicial,
+    #projetos {
         /* Remove o display: grid que estava organizando lado a lado */
-        display: block; 
-        gap: 0; /* Garante que o gap anterior seja removido */
+        display: block;
+        gap: 0;
+        /* Garante que o gap anterior seja removido */
         text-align: center;
     }
 
     /* Imagem agora ocupa 100% da largura da seção */
-    #inicial .img-responsiva, 
+    #inicial .img-responsiva,
     #projetos .img-responsiva {
-        width: 100%; /* Garante a largura total */
-        margin: var(--espacamento-sm) auto; /* Adiciona margem vertical */
+        width: 100%;
+        /* Garante a largura total */
+        margin: var(--espacamento-sm) auto;
+        /* Adiciona margem vertical */
     }
 
     /* Alinhamento h2*/
-    #inicial h2, #projetos h2 {
+    #inicial h2,
+    #projetos h2 {
         text-align: center;
         /* Remove o grid-column: 1/-1 que só faz sentido em um layout grid */
-        grid-column: unset; 
+        grid-column: unset;
     }
 
     /* Colunas no Grid Customizado para lg (manter) */
-    .col-lg-3 { grid-column: span 3; } /* 4 colunas */
-    .col-lg-6 { grid-column: span 6; }
-    .col-lg-9 { grid-column: span 9; }
+    .col-lg-3 {
+        grid-column: span 3;
+    }
+
+    /* 4 colunas */
+    .col-lg-6 {
+        grid-column: span 6;
+    }
+
+    .col-lg-9 {
+        grid-column: span 9;
+    }
 }
 
 /* 4. Desktops Grandes (xl) - 1200px */
@@ -501,24 +694,50 @@ form button[type="reset"]:hover {
     }
 
     /* Colunas no Grid Customizado para xl */
-    .col-xl-2 { grid-column: span 2; } /* 6 colunas */
-    .col-xl-4 { grid-column: span 4; }
-    .col-xl-8 { grid-column: span 8; }
-    .col-xl-10 { grid-column: span 10; }
+    .col-xl-2 {
+        grid-column: span 2;
+    }
+
+    /* 6 colunas */
+    .col-xl-4 {
+        grid-column: span 4;
+    }
+
+    .col-xl-8 {
+        grid-column: span 8;
+    }
+
+    .col-xl-10 {
+        grid-column: span 10;
+    }
 }
 
 /* 5. Desktops Extra-Grandes (xxl) - 1400px */
 @media (min-width: 1400px) {
+
     /* Limite máximo de largura maior */
     main {
         max-width: 1400px;
     }
 
     /* Ajuste de colunas no Grid Customizado para xxl */
-    .col-xxl-1 { grid-column: span 1; }
-    .col-xxl-3 { grid-column: span 3; }
-    .col-xxl-5 { grid-column: span 5; }
-    .col-xxl-7 { grid-column: span 7; }
-    .col-xxl-11 { grid-column: span 11; }
-}
+    .col-xxl-1 {
+        grid-column: span 1;
+    }
 
+    .col-xxl-3 {
+        grid-column: span 3;
+    }
+
+    .col-xxl-5 {
+        grid-column: span 5;
+    }
+
+    .col-xxl-7 {
+        grid-column: span 7;
+    }
+
+    .col-xxl-11 {
+        grid-column: span 11;
+    }
+}
