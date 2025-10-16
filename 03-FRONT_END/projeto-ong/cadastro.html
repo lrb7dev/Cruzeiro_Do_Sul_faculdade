@@ -138,7 +138,7 @@
                     <legend>Interesse</legend>
 
                     <p>Como você gostaria de participar?</p>
-                    <input type="radio" id="voluntario" name="participacao" value="voluntario">
+                    <input type="radio" id="voluntario" name="participacao" value="voluntario" required>
                     <label for="voluntario">Voluntário</label>
                     <br>
 
@@ -151,7 +151,7 @@
                     <br><br>
 
                     <label for="projeto">Projeto de Interesse:</label>
-                    <select id="projeto" name="projeto">
+                    <select id="projeto" name="projeto" required>
                         <option value="">Selecione um projeto</option>
                         <option value="ia-pcd">IA para PCD</option>
                         <option value="educacao-ia">Educação IA</option>
@@ -197,7 +197,7 @@
 
                 <br>
                 <button type="submit" disabled id="btnEnviar">Enviar Cadastro</button>
-                <button type="reset">Limpar Formulário</button>
+                <button type="button" id="btnLimpar">Limpar Formulário</button>
             </form>
 
             <h3>Outras Formas de Apoio</h3>
@@ -209,6 +209,9 @@
                 <li>Indicando nossa ONG para possíveis parceiros</li>
             </ul>
         </section>
+        <div id="toast-sucesso" class="toast-escondido">
+            ✅ Cadastro Enviado com Sucesso! Agradecemos o seu interesse. Entraremos em contato em breve!
+        </div>
     </main>
 
     <!-- Rodapé -->
@@ -223,6 +226,19 @@
 
     <!--JS-->
     <script src="script.js"></script>
+
+    <!--Código MODAL-->
+    <div id="modal-confirmacao" class="modal-escondido">
+        <div class="modal-conteudo">
+            <span class="fechar-modal" id="fechar-modal-top">&times;</span>
+            <h3>⚠️ Confirmação Necessária</h3>
+            <p>Você tem certeza que deseja limpar todo o formulário? Todos os dados preenchidos serão perdidos.</p>
+            <div class="modal-botoes">
+                <button id="btnConfirmarLimpeza">Sim, Limpar</button>
+                <button id="btnCancelarLimpeza">Não, Manter</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
