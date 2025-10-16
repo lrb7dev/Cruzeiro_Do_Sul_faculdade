@@ -9,6 +9,8 @@
     /* Azul vibrante para ações principais */
     --cor-secundaria: #6c757d;
     /* Cinza para elementos secundários */
+    --cor-estilo-primaria: #2777cc;
+    /*Similar a cor primária*/
     --cor-destaque: rgba(43, 238, 43, 0.781);
     /*para alguma ação de destaque nos textos*/
     --cor-fundo: #f8f9fa;
@@ -371,6 +373,74 @@ footer a {
 
 /*
 --------------------------------------------------------------------------
+ LAYOUTS ESPECÍFICOS PARA CONTEÚDO
+ Ajustes para a seção 'projetos'
+--------------------------------------------------------------------------
+*/
+/* 1. Contêiner Principal: Usa Flexbox para organizar os cards */
+.cards-container {
+    display: flex;
+    /* Habilita o Flexbox */
+    flex-wrap: wrap;
+    /* Permite que os cards quebrem para a próxima linha */
+    gap: var(--espacamento-md);
+    /* Espaçamento entre os cards */
+    justify-content: center;
+    /* Centraliza os cards no contêiner */
+    padding: 20px 0;
+}
+
+/* 2. Estilo Básico do Card (Elemento <article>) */
+.card {
+    background-color: var(--cor-fundo);
+    /* Cor de fundo leve para o card */
+    border: 1px solid var(--cor-secundaria);
+    /* Borda sutil */
+    border-radius: 8px;
+    /* Cantos arredondados */
+    padding: var(--espacamento-md);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para dar profundidade */
+    flex-basis: 100%;
+    /* Por padrão, ocupa 100% da largura em telas muito pequenas */
+    transition: transform 0.3s ease-in-out;
+    /* Transição suave para efeito hover */
+    max-width: 400px;
+    /* Limite máximo de largura para evitar que fiquem muito largos */
+}
+
+/* Efeito ao passar o mouse */
+.card:hover {
+    transform: translateY(-5px);
+    /* Efeito de 'levantar' */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    /* Sombra mais intensa */
+}
+
+/* Estilos de Tipografia dentro do Card */
+.card h3 {
+    color: var(--cor-estilo-primaria);
+    /* Cor primária para o título (pode ser ajustada) */
+    margin-top: 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para cards dentro do ul<li */
+
+.cards-ul {
+    /*Retira o estilo de lista 'marcações' dos li's*/
+    list-style: none;
+}
+
+.cards-ul li:nth-child(n + 2) {
+    /* Aplica a margem a partir do segundo <li> em diante */
+    margin-top: var(--espacamento-md);
+}
+
+/*
+--------------------------------------------------------------------------
  LAYOUT ESPECÍFICO: FORMULÁRIO DE CADASTRO (#cadastro)
  Utiliza CSS Grid para o layout do formulário e Flexbox para os grupos de campos
 --------------------------------------------------------------------------
@@ -582,6 +652,7 @@ form button[type="reset"]:hover {
         box-shadow: none;
         background-color: #f0f0f0;
     }
+
 }
 
 
@@ -628,6 +699,7 @@ form button[type="reset"]:hover {
     .dropdown:hover .dropdown-conteudo {
         display: block;
     }
+
 }
 
 /* 3. Desktops Médios (lg) - 992px */
