@@ -581,6 +581,7 @@ form button[type="submit"] {
     color: white;
 }
 
+/*Utilizando hover*/
 form button[type="submit"]:hover {
     background-color: #1e7e34;
 }
@@ -590,6 +591,7 @@ form button[type="reset"] {
     color: white;
 }
 
+/*Utilizando hover*/
 form button[type="reset"]:hover {
     background-color: #5a6268;
 }
@@ -601,6 +603,36 @@ form button[type="reset"]:hover {
     /* Padrão Mobile: empilhados */
     gap: var(--espacamento-sm);
     margin-top: var(--espacamento-sm);
+}
+
+/* FOCUS: Acessibilidade e Navegação por Teclado */
+form button:focus {
+    /* Removemos o 'outline' padrão (que é feio) e colocamos um 'box-shadow' estilizado. */
+    outline: none;
+    /* 'Box-shadow' cria um anel de foco que não afeta o layout do botão. */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+/* ACTIVE: Feedback de Clique */
+/* O botão parece ser 'pressionado' ao ser clicado, dando feedback imediato. */
+form button:active {
+    /* Pequena redução de escala para a ilusão de clique */
+    transform: scale(0.98);
+    /* Leve sombra interna para dar profundidade de clique */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* DISABLED (Submit): Quando as Condições de Envio não são Atendidas */
+/* O botão fica inativo e não responde ao clique ou hover */
+form button[type="submit"]:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    /* O cursor indica 'proibido' */
+    opacity: 0.6;
+    /* Para garantir que o hover e active não funcionem quando disabled */
+    transform: none;
+    box-shadow: none;
 }
 
 /*
