@@ -442,10 +442,106 @@ footer a {
 }
 
 /*
---------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+ BADGES
+---------------------------------------------------------------------------------
+*/
+/* Estilizando as Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-left: 10px;
+    border-radius: 12px;
+    /* Mais arredondado, estilo "pílula" */
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* cor */
+.badge-cadastro {
+    background-color: var(--cor-destaque);
+}
+
+.badge-cadastro a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.badge-cadastro a:hover {
+    color: var(--cor-link-hover);
+}
+
+/* Definição da Animação */
+@keyframes pulo-alerta {
+    0% {
+        /* Ponto de partida: ligeiramente para cima */
+        transform: translateY(-2px);
+    }
+
+    50% {
+        /* Meio do "pulo": desce para a posição normal */
+        transform: translateY(0);
+    }
+
+    100% {
+        /* Fim do ciclo: sobe de novo ligeiramente */
+        transform: translateY(-2px);
+    }
+}
+
+/* Aplicando a Animação a BADGE */
+.badge-alerta {
+    display: inline-block;
+    /* NECESSÁRIO para transform funcionar! */
+    padding: 4px 8px;
+    background-color: var(--cor-destaque);
+    border-radius: 4px;
+    font-weight: bold;
+
+    /* Animação */
+    animation-name: pulo-alerta;
+    animation-duration: 0.8s;
+    /* duração de 0.8 segundos */
+    animation-iteration-count: infinite;
+    /* repete indefinidamente */
+    animation-timing-function: ease-in-out;
+    /* Suaviza o início e o fim de cada ciclo */
+}
+
+/*
+---------------------------------------------------------------------------------
+ TAGS
+---------------------------------------------------------------------------------
+*/
+.tags {
+    margin-top: 10px;
+}
+
+.tag {
+    /* Tira a cor azul e o sublinhado, e define o estilo de tag */
+    display: inline-block;
+    text-decoration: none;
+    color: var(--cor-estilo-primaria);
+    background-color: #E6F0FF;
+    padding: var(--espacamento-xs) var(--espacamento-xs);
+    margin: var(--espacamento-xs) var(--espacamento-xs) 0 0;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.tag:hover {
+    background-color: #cce0ff;
+    color: var(--cor-destaque);
+}
+
+/*
+----------------------------------------------------------------------------------
  LAYOUT ESPECÍFICO: FORMULÁRIO DE CADASTRO (#cadastro)
  Utiliza CSS Grid para o layout do formulário e Flexbox para os grupos de campos
---------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 */
 
 #cadastro {
@@ -750,7 +846,7 @@ form button[type="submit"]:disabled {
 
 #btnConfirmarLimpeza {
     background-color: #f44336;
-    /* Vermelho para a ação de limpar */
+    /* Vermelho alaranjado ~~ para a ação de limpar */
     color: white;
 }
 
