@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONG Inclusão IA - Inclusão Social através da Inteligência Artificial</title>
+    <!--FAVICON responsivo-->
+    <link rel="apple-touch-icon" sizes="57x57" href="img/logo.ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/logo.ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/logo.ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/logo.ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/logo.ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/logo.ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/logo.ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/logo.ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logo.ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/logo.ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/logo.ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/logo.ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/logo.ico/favicon-16x16.png">
+    <link rel="manifest" href="img/logo.ico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/logo.ico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--CSS-->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Cabeçalho e Menu de Navegação -->
+    <header>
+        <div class="header-conteudo">
+            <div>
+                <h1>ONG Inclusão IA</h1>
+                <p>Inclusão Social através da Inteligência Artificial</p>
+            </div>
+
+            <nav>
+                <button class="hamburger" id="hamburger-menu" aria-label="Abrir menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+
+                <ul id="menu-lista" class="menu-lista">
+                    <li><a href="/index.html">Inicial</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Sobre Nós ▼</a>
+                        <div class="dropdown-conteudo">
+                            <a href="/missao.html">Missão</a>
+                            <a href="/equipe.html">Equipe</a>
+                            <a href="/contato.html">Contato</a>
+                        </div>
+                    </li>
+                    <li><a href="/projetos-sociais.html">Projetos Sociais</a></li>
+                    <li><a href="/cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Página de Cadastro -->
+        <section id="cadastro">
+            <h2>Junte-se à Nossa Causa</h2>
+            <p>Preencha o formulário abaixo para se cadastrar em nossos programas ou se tornar um voluntário.</p>
+
+            <form id="formulario">
+                <fieldset>
+                    <legend>Dados Pessoais</legend>
+
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required>
+                    <br><br>
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                    <br><br>
+
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00"
+                        oninput="mascaraCPF(this)" required>
+                    <br><br>
+
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(00) 0000-0000"
+                        oninput="mascaraTelefoneInteligente(this)">
+                    <br><br>
+
+                    <label for="cep">CEP:</label>
+                    <input type="text" id="cep" name="cep" maxlength="9" placeholder="00000-000"
+                        oninput="mascaraCEP(this)" required>
+                    <br><br>
+
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" name="Endereco" maxlength="30" required>
+                    <br><br>
+
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" required>
+                    <br><br>
+
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Interesse</legend>
+
+                    <p>Como você gostaria de participar?</p>
+                    <input type="radio" id="voluntario" name="participacao" value="voluntario" required>
+                    <label for="voluntario">Voluntário</label>
+                    <br>
+
+                    <input type="radio" id="beneficiario" name="participacao" value="beneficiario">
+                    <label for="beneficiario">Beneficiário</label>
+                    <br>
+
+                    <input type="radio" id="doador" name="participacao" value="doador">
+                    <label for="doador">Doador/Parceiro</label>
+                    <br><br>
+
+                    <label for="projeto">Projeto de Interesse:</label>
+                    <select id="projeto" name="projeto" required>
+                        <option value="">Selecione um projeto</option>
+                        <option value="ia-pcd">IA para PCD</option>
+                        <option value="educacao-ia">Educação IA</option>
+                        <option value="ia-comunitaria">IA Comunitária</option>
+                        <option value="diversidade-tech">Diversidade em Tech</option>
+                        <option value="ia-idosos">IA para Terceira Idade</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Habilidades e Experiência (Para Voluntários)</legend>
+
+                    <p>Quais das seguintes habilidades você possui? (selecione todas que se aplicam)</p>
+                    <input type="checkbox" id="programacao" name="habilidades" value="programacao">
+                    <label for="programacao">Programação/Desenvolvimento</label>
+                    <br>
+
+                    <input type="checkbox" id="design" name="habilidades" value="design">
+                    <label for="design">Design/UX</label>
+                    <br>
+
+                    <input type="checkbox" id="dados" name="habilidades" value="dados">
+                    <label for="dados">Ciência de Dados/ML</label>
+                    <br>
+
+                    <input type="checkbox" id="ensino" name="habilidades" value="ensino">
+                    <label for="ensino">Ensino/Mentoria</label>
+                    <br>
+
+                    <input type="checkbox" id="comunicacao" name="habilidades" value="comunicacao">
+                    <label for="comunicacao">Comunicação/Marketing</label>
+                    <br>
+
+                    <input type="checkbox" id="gestao" name="habilidades" value="gestao">
+                    <label for="gestao">Gestão/Administração</label>
+                    <br><br>
+
+                    <label for="mensagem">Conte um pouco sobre você, sua experiência ou sua organização:</label>
+                    <br>
+                    <textarea id="mensagem" name="mensagem" rows="4" cols="50"
+                        placeholder="Descreva brevemente sua motivação para participar..."></textarea>
+                </fieldset>
+
+                <br>
+                <button type="submit" disabled id="btnEnviar">Enviar Cadastro</button>
+                <button type="button" id="btnLimpar">Limpar Formulário</button>
+            </form>
+
+            <h3>Outras Formas de Apoio</h3>
+            <p>Além do cadastro, você pode nos apoiar de outras formas:</p>
+            <ul>
+                <li>Divulgando nosso trabalho nas redes sociais</li>
+                <li>Doando equipamentos de informática</li>
+                <li>Sendo um embaixador da causa em sua comunidade</li>
+                <li>Indicando nossa ONG para possíveis parceiros</li>
+            </ul>
+        </section>
+        <div id="toast-sucesso" class="toast-escondido">
+            ✅ Cadastro Enviado com Sucesso! Agradecemos o seu interesse. Entraremos em contato em breve!
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <hr>
+        <h3>ONG Inclusão IA</h3>
+        <p>Promovendo inclusão social através da Inteligência Artificial</p>
+        <p><strong>Contato:</strong> contato@inclusaoia.org | (11) 99999-9999</p>
+        <p><strong>Endereço:</strong> Rua da Inovação, 123 - Minas Gerais, MG</p>
+        <p>&copy; 2025 ONG Inclusão IA. Todos os direitos reservados.</p>
+    </footer>
+
+    <!--JS-->
+    <script src="script.js"></script>
+
+    <!--Código MODAL-->
+    <div id="modal-confirmacao" class="modal-escondido">
+        <div class="modal-conteudo">
+            <span class="fechar-modal" id="fechar-modal-top">&times;</span>
+            <h3>⚠️ Confirmação Necessária</h3>
+            <p>Você tem certeza que deseja limpar todo o formulário? Todos os dados preenchidos serão perdidos.</p>
+            <div class="modal-botoes">
+                <button id="btnConfirmarLimpeza">Sim, Limpar</button>
+                <button id="btnCancelarLimpeza">Não, Manter</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

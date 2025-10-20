@@ -1,0 +1,1081 @@
+/*
+--------------------------------------------------------------------------
+ CONFIGURAÇÕES GLOBAIS E VARIÁVEIS CSS 
+--------------------------------------------------------------------------
+*/
+:root {
+    /* Paleta de Cores */
+    --cor-primaria: #007bff;
+    /* Azul vibrante para ações principais */
+    --cor-secundaria: #6c757d;
+    /* Cinza para elementos secundários */
+    --cor-estilo-primaria: #2777cc;
+    /*Similar a cor primária*/
+    --cor-destaque: rgba(43, 238, 43, 0.781);
+    /*para alguma ação de destaque nos textos*/
+    --cor-fundo: #f8f9fa;
+    /* Fundo claro */
+    --cor-texto: #343a40;
+    /* Texto alternativo */
+    --cor-texto-alerta: #fc0000;
+    /* Para texto mais de alertas*/
+    --cor-destaque: #28a745;
+    /* Verde para destaque - sucesso */
+    --cor-link-hover: #97ee0b;
+    /*Destaque link*/
+    --cover-links: rgba(6, 22, 6, 0.733);
+    /*Cor link*/
+
+    /* Tamanhos de Fonte */
+    --fonte-tamanho-base: 16px;
+    --fonte-titulo-principal: 2.5rem;
+    --fonte-titulo-secao: 1.75rem;
+    --fonte-subtitulo: 1.25rem;
+    --fonte-destaque: 1.15rem;
+
+    /* Espaçamentos modulares*/
+    --espacamento-xs: 0.5rem;
+    /* 8px */
+    --espacamento-sm: 1rem;
+    /* 16px */
+    --espacamento-md: 1.5rem;
+    /* 24px */
+    --espacamento-lg: 2rem;
+    /* 32px */
+    --espacamento-xl: 3rem;
+    /* 48px */
+    --espacamento-xxl: 4rem;
+    /* 64px */
+
+    /* Configuração do Grid Customizado de 12 Colunas */
+    --grid-colunas: 12;
+    --grid-gap: var(--espacamento-md);
+    /*rem para tamanho da fonte raiz*/
+}
+
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*aplicando largura e altura em tudo da box, mais prático!*/
+}
+
+html {
+    scroll-behavior: smooth;
+    /*rolar a página de forma animada e gradual*/
+    font-size: var(--fonte-tamanho-base);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    min-height: 100vh;
+    /*100% da altura da janela de visualização*/
+}
+
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    /*mudança de cor no link de forma suave e animada*/
+}
+
+a:hover {
+    color: var(--cor-link-hover);
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: var(--espacamento-lg);
+}
+
+h1,
+h2,
+h3 {
+    margin-bottom: var(--espacamento-sm);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: var(--fonte-titulo-principal);
+    color: var(--cor-primaria);
+}
+
+h2 {
+    font-size: var(--fonte-titulo-secao);
+}
+
+h3 {
+    font-size: var(--fonte-subtitulo);
+    color: var(--cor-destaque);
+}
+
+p {
+    margin-bottom: var(--espacamento-sm);
+}
+
+.img-responsiva {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    /* Remove o espaço extra abaixo da imagem */
+    margin: 0 auto var(--espacamento-sm) auto;
+    /* Centraliza e adiciona margem inferior */
+    border-radius: 8px;
+    /* Borda suave */
+}
+
+/*destaque*/
+.destaque {
+    color: var(--cor-destaque);
+    font-size: var(--fonte-destaque);
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+/*
+--------------------------------------------------------------------------
+ LAYOUT PRINCIPAL (CSS GRID)
+ Estrutura geral das páginas (Header, Main, Footer)
+--------------------------------------------------------------------------
+*/
+body {
+    display: grid;
+    /* Define as áreas: cabeçalho, conteúdo principal e rodapé */
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr auto;
+    /* O 'main' ocupa o espaço restante */
+}
+
+header {
+    grid-area: header;
+}
+
+main {
+    grid-area: main;
+    padding: var(--espacamento-sm);
+    /* Garante que o conteúdo principal use o sistema de grid customizado */
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+footer {
+    grid-area: footer;
+}
+
+
+/*
+--------------------------------------------------------------------------
+ SISTEMA DE GRID CUSTOMIZADO (12 COLUNAS)
+ Classe container para aplicar o grid
+--------------------------------------------------------------------------
+*/
+/* Aplicado a elementos que precisam ser divididos em colunas, como <section> */
+.grid-container {
+    display: grid;
+    /* Define 12 colunas de largura fracionária, garantindo distribuição igual */
+    grid-template-columns: repeat(var(--grid-colunas), 1fr);
+    gap: var(--grid-gap);
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Classes de colunas para ocupar N colunas (col-1 a col-12) */
+/* Por padrão (mobile first), todos ocupam 12 colunas */
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    grid-column: span 12;
+}
+
+/*
+--------------------------------------------------------------------------
+ COMPONENTES INTERNOS (FLEXBOX)
+ Header e Navegação
+--------------------------------------------------------------------------
+*/
+header {
+    background-color: var(--cor-primaria);
+    color: white;
+    padding: var(--espacamento-sm) 0;
+    text-align: center;
+}
+
+header h1,
+header p {
+    padding: 0 var(--espacamento-sm);
+}
+
+.header-conteudo {
+    display: flex;
+    justify-content: space-between;
+    /* Alinha logo e nav em extremidades opostas */
+    align-items: center;
+    max-width: 1200px;
+    /* Limita largura máxima para telas grandes */
+    margin: 0 auto;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /*display: flex; /* Exibe os itens lado a lado no desktop */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--cover-links);
+    padding: 10px 15px;
+    display: block;
+}
+
+/* Estilos do Dropdown */
+.dropdown {
+    position: relative;
+    /* Container para o conteúdo dropdown */
+}
+
+.dropdown-conteudo {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-conteudo a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-conteudo a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-conteudo {
+    display: block;
+    /* Mostra o dropdown no hover do desktop */
+}
+
+/* Estilos do Botão Hambúrguer (Inicialmente Escondido no Desktop) */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 1001;
+    /* Garante que fique acima do menu */
+}
+
+.bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Rodapé */
+footer {
+    background-color: var(--cor-texto);
+    color: white;
+    text-align: center;
+    padding: var(--espacamento-lg) var(--espacamento-sm);
+    margin-top: var(--espacamento-lg);
+}
+
+footer hr {
+    border: 0;
+    border-top: 1px solid var(--cor-secundaria);
+    margin: 0 0 var(--espacamento-sm) 0;
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--cor-destaque);
+}
+
+
+/*
+--------------------------------------------------------------------------
+ LAYOUTS ESPECÍFICOS PARA CONTEÚDO
+ Ajustes para a seção 'inicial' e listas
+--------------------------------------------------------------------------
+*/
+#inicial {
+    padding: var(--espacamento-lg) 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#inicial h2 {
+    text-align: center;
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Layout especial para a seção de valores */
+#inicial ul:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que os itens quebrem a linha */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--espacamento-sm);
+    justify-content: center;
+}
+
+#inicial ul:last-of-type li {
+    background-color: white;
+    border: 1px solid var(--cor-primaria);
+    border-radius: 6px;
+    padding: var(--espacamento-sm);
+    flex-grow: 1;
+    /* Cresce para ocupar espaço em telas maiores */
+    flex-basis: 100%;
+    /* Padrão mobile: ocupa 100% da largura */
+    max-width: 300px;
+    /* Limite de largura para não ficar muito esticado */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#inicial ul:last-of-type li:hover {
+    transform: translateY(-5px);
+}
+
+/*
+--------------------------------------------------------------------------
+ LAYOUTS ESPECÍFICOS PARA CONTEÚDO
+ Ajustes para a seção 'projetos'
+--------------------------------------------------------------------------
+*/
+/* 1. Contêiner Principal: Usa Flexbox para organizar os cards */
+.cards-container {
+    display: flex;
+    /* Habilita o Flexbox */
+    flex-wrap: wrap;
+    /* Permite que os cards quebrem para a próxima linha */
+    gap: var(--espacamento-md);
+    /* Espaçamento entre os cards */
+    justify-content: center;
+    /* Centraliza os cards no contêiner */
+    padding: 20px 0;
+}
+
+/* 2. Estilo Básico do Card (Elemento <article>) */
+.card {
+    background-color: var(--cor-fundo);
+    /* Cor de fundo leve para o card */
+    border: 1px solid var(--cor-secundaria);
+    /* Borda sutil */
+    border-radius: 8px;
+    /* Cantos arredondados */
+    padding: var(--espacamento-md);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para dar profundidade */
+    flex-basis: 100%;
+    /* Por padrão, ocupa 100% da largura em telas muito pequenas */
+    transition: transform 0.3s ease-in-out;
+    /* Transição suave para efeito hover */
+    max-width: 400px;
+    /* Limite máximo de largura para evitar que fiquem muito largos */
+}
+
+/* Efeito ao passar o mouse */
+.card:hover {
+    transform: translateY(-5px);
+    /* Efeito de 'levantar' */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    /* Sombra mais intensa */
+}
+
+/* Estilos de Tipografia dentro do Card */
+.card h3 {
+    color: var(--cor-estilo-primaria);
+    /* Cor primária para o título (pode ser ajustada) */
+    margin-top: 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para cards dentro do ul<li */
+
+.cards-ul {
+    /*Retira o estilo de lista 'marcações' dos li's*/
+    list-style: none;
+}
+
+.cards-ul li:nth-child(n + 2) {
+    /* Aplica a margem a partir do segundo <li> em diante */
+    margin-top: var(--espacamento-md);
+}
+
+/*
+---------------------------------------------------------------------------------
+ BADGES
+---------------------------------------------------------------------------------
+*/
+/* Estilizando as Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-left: 10px;
+    border-radius: 12px;
+    /* Mais arredondado, estilo "pílula" */
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* cor */
+.badge-cadastro {
+    background-color: var(--cor-destaque);
+}
+
+.badge-cadastro a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.badge-cadastro a:hover {
+    color: var(--cor-link-hover);
+}
+
+/* Definição da Animação */
+@keyframes pulo-alerta {
+    0% {
+        /* Ponto de partida: ligeiramente para cima */
+        transform: translateY(-2px);
+    }
+
+    50% {
+        /* Meio do "pulo": desce para a posição normal */
+        transform: translateY(0);
+    }
+
+    100% {
+        /* Fim do ciclo: sobe de novo ligeiramente */
+        transform: translateY(-2px);
+    }
+}
+
+/* Aplicando a Animação a BADGE */
+.badge-alerta {
+    display: inline-block;
+    /* NECESSÁRIO para transform funcionar! */
+    padding: 4px 8px;
+    background-color: var(--cor-destaque);
+    border-radius: 4px;
+    font-weight: bold;
+
+    /* Animação */
+    animation-name: pulo-alerta;
+    animation-duration: 0.8s;
+    /* duração de 0.8 segundos */
+    animation-iteration-count: infinite;
+    /* repete indefinidamente */
+    animation-timing-function: ease-in-out;
+    /* Suaviza o início e o fim de cada ciclo */
+}
+
+/*
+---------------------------------------------------------------------------------
+ TAGS
+---------------------------------------------------------------------------------
+*/
+.tags {
+    margin-top: 10px;
+}
+
+.tag {
+    /* Tira a cor azul e o sublinhado, e define o estilo de tag */
+    display: inline-block;
+    text-decoration: none;
+    color: var(--cor-estilo-primaria);
+    background-color: #E6F0FF;
+    padding: var(--espacamento-xs) var(--espacamento-xs);
+    margin: var(--espacamento-xs) var(--espacamento-xs) 0 0;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.tag:hover {
+    background-color: #cce0ff;
+    color: var(--cor-destaque);
+}
+
+/*
+----------------------------------------------------------------------------------
+ LAYOUT ESPECÍFICO: FORMULÁRIO DE CADASTRO (#cadastro)
+ Utiliza CSS Grid para o layout do formulário e Flexbox para os grupos de campos
+----------------------------------------------------------------------------------
+*/
+
+#cadastro {
+    padding-top: var(--espacamento-lg);
+    max-width: 800px;
+    /* Limita a largura do formulário para melhor leitura */
+    margin: 0 auto;
+}
+
+#cadastro h2,
+#cadastro p {
+    text-align: center;
+}
+
+/* Estrutura Principal do Formulário */
+form {
+    border: 1px solid #ccc;
+    padding: var(--espacamento-sm);
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo do Fieldset (Grupos de Campos) */
+fieldset {
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 6px;
+    padding: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-lg);
+}
+
+legend {
+    font-size: var(--fonte-subtitulo);
+    font-weight: bold;
+    color: var(--cor-primaria);
+    padding: 0 0.5rem;
+}
+
+/*
+--------------------------------------------------------------------------
+ PADRÃO PARA PÁGINAS EM CONSTRUÇÃO
+--------------------------------------------------------------------------
+*/
+#pg-construcao p {
+    color: var(--cor-secundaria);
+    text-align: center;
+    margin-top: var(--espacamento-md);
+}
+
+/*
+--------------------------------------------------------------------------
+ APLICAÇÃO DO CSS GRID DENTRO DO FORMULÁRIO
+ Cria um grid de 12 colunas para organizar os campos (Labels e Inputs)
+--------------------------------------------------------------------------
+*/
+
+.form-group {
+    /* Define o container para labels e inputs */
+    display: grid;
+    /* 12 colunas, mas vamos usá-lo principalmente para alinhamento */
+    grid-template-columns: 1fr;
+    /* Padrão Mobile: 1 coluna */
+    gap: 0.5rem 1rem;
+}
+
+/* Estilo Padrão para TODOS os Inputs, Selects e Textareas */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--cor-secundaria);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    /* Foco Azul Suave */
+    outline: none;
+    /* Remove o contorno padrão do navegador */
+}
+
+/* Ajustes para Rádios e Checkboxes (Flexbox) */
+fieldset p {
+    margin-bottom: 0.5rem;
+}
+
+fieldset input[type="radio"],
+fieldset input[type="checkbox"] {
+    /* Reseta a largura total para que os radio/checkbox ocupem seu espaço natural */
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+/* Alinhamento de Rádios/Checkboxes e Labels (Flexbox) */
+fieldset label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+/*
+--------------------------------------------------------------------------
+ ESTILO E ALINHAMENTO DOS BOTÕES (FLEXBOX)
+--------------------------------------------------------------------------
+*/
+form button {
+    /* Botões lado a lado com Flexbox */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    margin-right: var(--espacamento-sm);
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    width: 100%;
+    /* Mobile: Ocupam 100% */
+    margin-bottom: var(--espacamento-sm);
+}
+
+form button[type="submit"] {
+    background-color: var(--cor-destaque);
+    color: white;
+}
+
+/*Utilizando hover*/
+form button[type="submit"]:hover {
+    background-color: #1e7e34;
+}
+
+form button[type="reset"] {
+    background-color: var(--cor-secundaria);
+    color: white;
+}
+
+/*Utilizando hover*/
+form button[type="reset"]:hover {
+    background-color: #5a6268;
+}
+
+/* Container Flex para os botões em telas maiores */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    /* Padrão Mobile: empilhados */
+    gap: var(--espacamento-sm);
+    margin-top: var(--espacamento-sm);
+}
+
+/* FOCUS: Acessibilidade e Navegação por Teclado */
+form button:focus {
+    /* Removemos o 'outline' padrão (que é feio) e colocamos um 'box-shadow' estilizado. */
+    outline: none;
+    /* 'Box-shadow' cria um anel de foco que não afeta o layout do botão. */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+/* ACTIVE: Feedback de Clique */
+/* O botão parece ser 'pressionado' ao ser clicado, dando feedback imediato. */
+form button:active {
+    /* Pequena redução de escala para a ilusão de clique */
+    transform: scale(0.98);
+    /* Leve sombra interna para dar profundidade de clique */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* DISABLED (Submit): Quando as Condições de Envio não são Atendidas */
+/* O botão fica inativo e não responde ao clique ou hover */
+form button[type="submit"]:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    /* O cursor indica 'proibido' */
+    opacity: 0.6;
+    /* Para garantir que o hover e active não funcionem quando disabled */
+    transform: none;
+    box-shadow: none;
+}
+
+/* --- Estilização e Posição do Toast --- */
+
+/* Estilo Básico do Toast */
+#toast-sucesso {
+    /*Posição*/
+    position: fixed;
+    top: var(--espacamento-md);
+    left: 50%;
+    transform: translateX(-50%);
+    /*Move o elemento de volta 50% da sua própria largura*/
+    /* Aparência */
+    background-color: var(--cor-destaque);
+    /* Verde para sucesso */
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    /* Garante que fique acima de outros elementos */
+    z-index: 1000;
+    /* Transição suave para o efeito de aparecer/desaparecer */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Estado Inicial: Escondido e Fora da Tela */
+.toast-escondido {
+    /* Move o toast totalmente para a direita, fora da viewport */
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+/* Estado Visível: Na tela */
+.toast-visivel {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/*
+--------------------------------------------------------------------------
+ MODAL (estilização)
+--------------------------------------------------------------------------
+*/
+
+/* Overlay (fundo escuro que cobre a tela) */
+#modal-confirmacao {
+    display: none;
+    /* Inicia escondido */
+    position: fixed;
+    /* Fica fixo no viewport */
+    z-index: 2000;
+    /* Garante que fique acima de tudo (incluindo o Toast) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Cor de fundo semi-transparente */
+}
+
+/* O Conteúdo do Modal (a caixa branca) */
+.modal-conteudo {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% do topo e centralizado */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Título e Parágrafo */
+.modal-conteudo h3 {
+    color: var(--cor-texto-alerta);
+    /* Cor de aviso */
+    margin-top: 0;
+}
+
+/* Botão de Fechar (o X no canto) */
+.fechar-modal {
+    color: var(--cor-texto);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+
+.fechar-modal:hover,
+.fechar-modal:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Estilo dos Botões de Ação */
+.modal-botoes button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#btnConfirmarLimpeza {
+    background-color: #f44336;
+    /* Vermelho alaranjado ~~ para a ação de limpar */
+    color: white;
+}
+
+#btnConfirmarLimpeza:hover {
+    background-color: #cc0000;
+}
+
+#btnCancelarLimpeza {
+    background-color: #ddd;
+    /* Cinza para cancelar */
+    color: #333;
+}
+
+#btnCancelarLimpeza:hover {
+    background-color: #ccc;
+}
+
+/* Classe para mostrar o modal via JS */
+.modal-visivel {
+    display: block !important;
+}
+
+/*
+--------------------------------------------------------------------------
+ BREAKPOINTS RESPONSIVOS (5 PONTOS)
+ Mobile First (padrão é para telas pequenas)
+--------------------------------------------------------------------------
+*/
+/*1. Telas pequenas com Menu Hamburguer*/
+@media (max-width: 767px) {
+    .header-conteudo {
+        flex-wrap: wrap;
+    }
+
+    /* Exibe o hambúrguer no mobile */
+    .hamburger {
+        display: block;
+        /* Alinha o botão hambúrguer no mobile */
+        margin-left: auto;
+    }
+
+    /* Oculta o menu de navegação por padrão no mobile */
+    .menu-lista {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        /* Links um abaixo do outro */
+        background-color: #fff;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Classe ativada pelo JavaScript para mostrar o menu */
+    .menu-lista.active {
+        display: flex;
+    }
+
+    .menu-lista li {
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Dropdown no Mobile */
+    .dropdown-conteudo {
+        position: static;
+        box-shadow: none;
+        background-color: #f0f0f0;
+    }
+
+}
+
+
+/* 2. Mostra MENU completo para telas de 768px (Tablets) para cima*/
+@media (min-width: 768px) {
+
+    /* Oculta o hambúrguer completamente */
+    .hamburger {
+        display: none !important;
+    }
+
+    /* Exibe a lista do menu de navegação */
+    .menu-lista {
+        display: flex !important;
+        /* Força a exibição na horizontal */
+        position: static !important;
+        /* Remove posicionamento absoluto de mobile */
+        width: auto !important;
+        /* Largura automática (não 100%) */
+        background: none !important;
+        /* Remove background extra */
+        box-shadow: none !important;
+        /* Remove a sombra do mobile */
+    }
+
+    nav ul li a {
+        color: var(--cor-fundo);
+    }
+
+    .menu-lista li {
+        border-bottom: none;
+        /* Remove a borda do mobile */
+    }
+
+    /* Dropdown no Desktop: Voltar à exibição normal */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-conteudo {
+        position: absolute;
+    }
+
+    .dropdown:hover .dropdown-conteudo {
+        display: block;
+    }
+
+}
+
+/* 3. Desktops Médios (lg) - 992px */
+@media (min-width: 992px) {
+
+    /* Aumenta o espaçamento geral */
+    main {
+        padding: var(--espacamento-lg);
+    }
+
+    /*
+    |----------------------------------------------------------
+    | LAYOUT DAS SEÇÕES (#inicial e #projetos)
+    | Força o layout a ser de fluxo normal (bloco), garantindo
+    | que a imagem (100% de largura) ocupe sua linha e o texto venha abaixo.
+    |----------------------------------------------------------
+    */
+    #inicial,
+    #projetos {
+        /* Remove o display: grid que estava organizando lado a lado */
+        display: block;
+        gap: 0;
+        /* Garante que o gap anterior seja removido */
+        text-align: center;
+    }
+
+    /* Imagem agora ocupa 100% da largura da seção */
+    #inicial .img-responsiva,
+    #projetos .img-responsiva {
+        width: 100%;
+        /* Garante a largura total */
+        margin: var(--espacamento-sm) auto;
+        /* Adiciona margem vertical */
+    }
+
+    /* Alinhamento h2*/
+    #inicial h2,
+    #projetos h2 {
+        text-align: center;
+        /* Remove o grid-column: 1/-1 que só faz sentido em um layout grid */
+        grid-column: unset;
+    }
+
+    /* Colunas no Grid Customizado para lg (manter) */
+    .col-lg-3 {
+        grid-column: span 3;
+    }
+
+    /* 4 colunas */
+    .col-lg-6 {
+        grid-column: span 6;
+    }
+
+    .col-lg-9 {
+        grid-column: span 9;
+    }
+}
+
+/* 4. Desktops Grandes (xl) - 1200px */
+@media (min-width: 1200px) {
+    :root {
+        --fonte-titulo-principal: 3rem;
+        --espacamento-lg: 3rem;
+    }
+
+    /* Colunas no Grid Customizado para xl */
+    .col-xl-2 {
+        grid-column: span 2;
+    }
+
+    /* 6 colunas */
+    .col-xl-4 {
+        grid-column: span 4;
+    }
+
+    .col-xl-8 {
+        grid-column: span 8;
+    }
+
+    .col-xl-10 {
+        grid-column: span 10;
+    }
+}
+
+/* 5. Desktops Extra-Grandes (xxl) - 1400px */
+@media (min-width: 1400px) {
+
+    /* Limite máximo de largura maior */
+    main {
+        max-width: 1400px;
+    }
+
+    /* Ajuste de colunas no Grid Customizado para xxl */
+    .col-xxl-1 {
+        grid-column: span 1;
+    }
+
+    .col-xxl-3 {
+        grid-column: span 3;
+    }
+
+    .col-xxl-5 {
+        grid-column: span 5;
+    }
+
+    .col-xxl-7 {
+        grid-column: span 7;
+    }
+
+    .col-xxl-11 {
+        grid-column: span 11;
+    }
+}
