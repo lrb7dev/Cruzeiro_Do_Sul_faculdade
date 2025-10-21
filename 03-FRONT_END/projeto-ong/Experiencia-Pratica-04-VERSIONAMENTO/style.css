@@ -1,0 +1,741 @@
+/*
+--------------------------------------------------------------------------
+ CONFIGURAÇÕES GLOBAIS E VARIÁVEIS CSS 
+ (Mantidas do original e adicionada a cor de erro)
+--------------------------------------------------------------------------
+*/
+:root {
+    /* Paleta de Cores */
+    --cor-primaria: #007bff;
+    /* Azul vibrante para ações principais */
+    --cor-secundaria: #6c757d;
+    /* Cinza para elementos secundários */
+    --cor-estilo-primaria: #2777cc;
+    /*Similar a cor primária*/
+    --cor-destaque: rgba(29, 179, 29, 0.781);
+    /*para alguma ação de destaque nos textos*/
+    --cor-fundo: #f8f9fa;
+    /* Fundo claro */
+    --cor-texto: #343a40;
+    /* Texto alternativo */
+    --cor-texto-alerta: #fc0000;
+    /* Para texto mais de alertas*/
+    --cor-destaque-sucesso: #28a745; /* Verde para destaque - sucesso */
+    --cor-link-hover: #97ee0b;
+    /*Destaque link*/
+    --cover-links: rgba(6, 22, 6, 0.733);
+    /*Cor link*/
+    --cor-erro: #dc3545; /* Vermelho para erros */
+
+    /* Tamanhos de Fonte */
+    --fonte-tamanho-base: 16px;
+    --fonte-titulo-principal: 2.5rem;
+    --fonte-titulo-secao: 1.75rem;
+    --fonte-subtitulo: 1.25rem;
+    --fonte-destaque: 1.15rem;
+
+    /* Espaçamentos modulares*/
+    --espacamento-xs: 0.5rem;
+    /* 8px */
+    --espacamento-sm: 1rem;
+    /* 16px */
+    --espacamento-md: 1.5rem;
+    /* 24px */
+    --espacamento-lg: 2rem;
+    /* 32px */
+    --espacamento-xl: 3rem;
+    /* 48px */
+    --espacamento-xxl: 4rem;
+    /* 64px */
+
+    /* Configuração do Grid Customizado de 12 Colunas */
+    --grid-colunas: 12;
+    --grid-gap: var(--espacamento-md);
+    /*rem para tamanho da fonte raiz*/
+}
+
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*aplicando largura e altura em tudo da box, mais prático!*/
+}
+
+html {
+    scroll-behavior: smooth;
+    /*rolar a página de forma animada e gradual*/
+    font-size: var(--fonte-tamanho-base);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    min-height: 100vh;
+    /*100% da altura da janela de visualização*/
+}
+
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    /*mudança de cor no link de forma suave e animada*/
+}
+
+a:hover {
+    color: var(--cor-link-hover);
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: var(--espacamento-lg);
+}
+
+h1,
+h2,
+h3 {
+    margin-bottom: var(--espacamento-sm);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: var(--fonte-titulo-principal);
+    color: var(--cor-primaria);
+}
+
+h2 {
+    font-size: var(--fonte-titulo-secao);
+}
+
+h3 {
+    font-size: var(--fonte-subtitulo);
+    color: var(--cor-destaque);
+}
+
+p {
+    margin-bottom: var(--espacamento-sm);
+}
+
+.img-responsiva {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    /* Remove o espaço extra abaixo da imagem */
+    margin: 0 auto var(--espacamento-sm) auto;
+    /* Centraliza e adiciona margem inferior */
+    border-radius: 8px;
+    /* Borda suave */
+}
+
+/*destaque*/
+.destaque {
+    color: var(--cor-destaque);
+    font-size: var(--fonte-destaque);
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+/*centralizar*/
+.centralizar {
+    text-align: center;
+}
+
+/*
+--------------------------------------------------------------------------
+ LAYOUT PRINCIPAL (CSS GRID)
+--------------------------------------------------------------------------
+*/
+body {
+    display: grid;
+    /* Define as áreas: cabeçalho, conteúdo principal e rodapé */
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr auto;
+    /* O 'main' ocupa o espaço restante */
+}
+
+header {
+    grid-area: header;
+}
+
+main {
+    grid-area: main;
+    padding: var(--espacamento-sm);
+    /* Garante que o conteúdo principal use o sistema de grid customizado */
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+footer {
+    grid-area: footer;
+}
+
+
+/*
+--------------------------------------------------------------------------
+ SISTEMA DE GRID CUSTOMIZADO (12 COLUNAS)
+--------------------------------------------------------------------------
+*/
+.grid-container {
+    display: grid;
+    /* Define 12 colunas de largura fracionária, garantindo distribuição igual */
+    grid-template-columns: repeat(var(--grid-colunas), 1fr);
+    gap: var(--grid-gap);
+    margin-bottom: var(--espacamento-lg);
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    grid-column: span 12;
+}
+
+/*
+--------------------------------------------------------------------------
+ COMPONENTES INTERNOS (Header, Nav, Footer)
+--------------------------------------------------------------------------
+*/
+header {
+    background-color: var(--cor-primaria);
+    color: white;
+    padding: var(--espacamento-sm) 0;
+    text-align: center;
+}
+
+header h1,
+header p {
+    padding: 0 var(--espacamento-sm);
+}
+
+.header-conteudo {
+    display: flex;
+    justify-content: space-between;
+    /* Alinha logo e nav em extremidades opostas */
+    align-items: center;
+    max-width: 1200px;
+    /* Limita largura máxima para telas grandes */
+    margin: 0 auto;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--cover-links);
+    padding: 10px 15px;
+    display: block;
+}
+
+/* Estilos do Dropdown */
+.dropdown {
+    position: relative;
+    /* Container para o conteúdo dropdown */
+}
+
+.dropdown-conteudo {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-conteudo a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-conteudo a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-conteudo {
+    display: block;
+    /* Mostra o dropdown no hover do desktop */
+}
+
+/* Estilos do Botão Hambúrguer (Inicialmente Escondido no Desktop) */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 1001;
+    /* Garante que fique acima do menu */
+}
+
+.bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Transição do Hambúrguer para o X */
+.hamburger.is-active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.is-active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.is-active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+
+/* Rodapé */
+footer {
+    background-color: var(--cor-texto);
+    color: white;
+    text-align: center;
+    padding: var(--espacamento-lg) var(--espacamento-sm);
+    margin-top: var(--espacamento-lg);
+}
+
+footer hr {
+    border: 0;
+    border-top: 1px solid var(--cor-secundaria);
+    margin: 0 0 var(--espacamento-sm) 0;
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--cor-destaque);
+}
+
+/* --------------------------------------------------------------------------
+ LAYOUTS ESPECÍFICOS E FORMULÁRIOS
+--------------------------------------------------------------------------
+*/
+#inicial {
+    padding: var(--espacamento-lg) 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#inicial h2 {
+    text-align: center;
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Estilo geral do formulário (dentro do grid-container) */
+#cadastro-voluntario form {
+    background-color: white;
+    padding: var(--espacamento-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo para cada item do formulário */
+#cadastro-voluntario label {
+    display: block;
+    margin-bottom: var(--espacamento-xs);
+    font-weight: bold;
+    color: var(--cor-texto);
+}
+
+#cadastro-voluntario input[type="text"],
+#cadastro-voluntario input[type="email"],
+#cadastro-voluntario input[type="tel"],
+#cadastro-voluntario select,
+#cadastro-voluntario textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: var(--espacamento-sm);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#cadastro-voluntario input:focus,
+#cadastro-voluntario select:focus,
+#cadastro-voluntario textarea:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+}
+
+/* Classe para campo obrigatório */
+.obrigatorio {
+    color: var(--cor-erro);
+    font-weight: normal;
+}
+
+/* --------------------------------------------------------------------------
+ VALIDAÇÃO DE CONSISTÊNCIA E ERROS 
+--------------------------------------------------------------------------
+*/
+/* Mensagem de Erro (Aviso de preenchimento incorreto) */
+.erro-mensagem {
+    display: block;
+    color: var(--cor-erro);
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: var(--espacamento-sm);
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.erro-mensagem.active {
+    height: 18px; /* Ajuste conforme o tamanho da fonte */
+    opacity: 1;
+}
+
+/* Estilo para input com erro */
+.input-error {
+    border-color: var(--cor-erro) !important;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Botões do Formulário */
+.botoes-formulario {
+    grid-column: span 12;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--espacamento-md);
+    margin-top: var(--espacamento-sm);
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primario {
+    background-color: var(--cor-primaria);
+    color: white;
+}
+
+.btn-primario:hover {
+    background-color: #0056b3;
+    color: white;
+    opacity: 0.9;
+}
+
+.btn-secundario {
+    background-color: var(--cor-secundaria);
+    color: white;
+}
+
+.btn-secundario:hover {
+    background-color: #2a2d30;
+    color: white;
+    opacity: 0.9;
+}
+
+/* para centralizar botões específicos*/
+.btn-centralizado {
+    text-align: center;
+    margin: 2rem 0;
+}
+/*
+--------------------------------------------------------------------------
+ TOAST (AVISO DE SUCESSO)
+--------------------------------------------------------------------------
+*/
+.toast-escondido, .toast-visivel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--cor-destaque-sucesso);
+    color: white;
+    padding: var(--espacamento-md);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.toast-visivel {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+ MODAL (CONFIRMAÇÃO)
+--------------------------------------------------------------------------
+*/
+.modal-escondido, .modal-visivel {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none; /* Inicia escondido */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-visivel {
+    display: flex; /* Exibir com flex para centralizar */
+    opacity: 1;
+}
+
+.modal-conteudo {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% do topo e centralizado */
+    padding: var(--espacamento-lg);
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.fechar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.fechar-modal:hover,
+.fechar-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--espacamento-md);
+    margin-top: var(--espacamento-md);
+}
+
+/*
+--------------------------------------------------------------------------
+ RESPONSIVIDADE (Media Queries)
+--------------------------------------------------------------------------
+*/
+
+/* Media Query: Mobile/Tablet */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        /* Mostra o hambúrguer */
+        margin-right: var(--espacamento-sm);
+    }
+
+    nav {
+        /* Garante que o menu hamburguer (botão) esteja sempre visível e no topo */
+        position: fixed; /* Fixa a navegação no topo da tela */
+        top: 0;
+        right: 0;
+        z-index: 1001; /* Fica acima do menu aberto */
+    }
+
+    .menu-lista {
+        display: flex; 
+        flex-direction: column;
+        
+        position: fixed; /* FIXO na tela */
+        top: 0; /* Alinha no topo da tela */
+        right: 0; /* Alinha na lateral direita */
+        
+        width: 75%; /* Ocupa apenas 75% da largura da tela */
+        height: 20vh; /* Ocupa 20% da altura da tela */
+        
+        background-color: #f8f8f8; 
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        
+        /* Por padrão, fora da tela (oculto) */
+        transform: translateX(100%); 
+        transition: transform 0.3s ease-in-out;
+        
+        overflow-y: auto; /* Permite rolar se houver muitos links */
+    }
+
+    .menu-lista.active {
+        /* Desliza para dentro da tela (visível) */
+        transform: translateX(0);
+    }
+
+    .menu-lista li {
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .menu-lista li a {
+        color: var(--cor-texto);
+    }
+
+    .dropdown-conteudo {
+        position: static;
+        /* Para o dropdown não vazar no mobile */
+        box-shadow: none;
+        border-top: 1px solid #eee;
+        padding-left: var(--espacamento-md);
+        background-color: #f1f1f1;
+        text-align: center;
+        width: 100%;
+    }
+
+    .dropdown:hover .dropdown-conteudo {
+        display: none;
+    }
+
+    /* O dropdown aberto com JS no mobile ou mantido aberto */
+    .dropdown:focus-within .dropdown-conteudo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+/* 2. Tablets e Desktops Pequenos (md) - 768px */
+@media (min-width: 768px) {
+
+    /* Exibe a lista do menu de navegação */
+    .menu-lista {
+        display: flex !important;
+        /* Força a exibição na horizontal */
+        position: static !important;
+        /* Remove posicionamento absoluto de mobile */
+        width: auto !important;
+        /* Largura automática (não 100%) */
+        background: none !important;
+        /* Remove background extra */
+        box-shadow: none !important;
+        /* Remove a sombra do mobile */
+    }
+
+    nav ul li a {
+        color: var(--cor-fundo);
+    }
+
+    .menu-lista li {
+        border-bottom: none;
+        /* Remove a borda do mobile */
+    }
+
+    /* Dropdown no Desktop: Voltar à exibição normal */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-conteudo {
+        position: absolute;
+    }
+
+    .dropdown:hover .dropdown-conteudo {
+        display: block;
+    }
+    /* Colunas no Grid Customizado para md */
+    .col-md-6 {
+        grid-column: span 6;
+    }
+
+    .col-md-4 {
+        grid-column: span 4;
+    }
+
+    .col-md-8 {
+        grid-column: span 8;
+    }
+}
+
+/* 3. Desktops Médios (lg) - 992px */
+@media (min-width: 992px) {
+    main {
+        padding: var(--espacamento-lg) 0;
+    }
+
+    .header-conteudo {
+        padding: 0 var(--espacamento-lg);
+    }
+
+    /* Ajuste de espaçamento para as sections internas */
+    #inicial {
+        padding: var(--espacamento-lg) 0;
+    }
+
+    /* Colunas no Grid Customizado para lg */
+    .col-lg-3 {
+        grid-column: span 3;
+    }
+
+    /* 4 colunas */
+    .col-lg-6 {
+        grid-column: span 6;
+    }
+
+    .col-lg-9 {
+        grid-column: span 9;
+    }
+}
+
+/* 4. Desktops Grandes (xl) - 1200px */
+@media (min-width: 1200px) {
+    :root {
+        --fonte-titulo-principal: 3rem;
+        --espacamento-lg: 3rem;
+    }
+
+    /* Colunas no Grid Customizado para xl */
+    .col-xl-2 {
+        grid-column: span 2;
+    }
+
+    /* 6 colunas */
+    .col-xl-4 {
+        grid-column: span 4;
+    }
+
+    .col-xl-8 {
+        grid-column: span 8;
+    }
+}
