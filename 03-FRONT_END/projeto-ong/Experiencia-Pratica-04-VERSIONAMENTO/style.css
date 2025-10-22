@@ -18,16 +18,24 @@
     /* Fundo claro */
     --cor-texto: #343a40;
     /* Texto alternativo */
+    --cor-texto-claro: #fff;
+    /* Texto para fundo primário/escuro */
     --cor-texto-alerta: #fc0000;
     /* Para texto mais de alertas*/
-    --cor-destaque-sucesso: #28a745; /* Verde para destaque - sucesso */
+    --cor-destaque-sucesso: #28a745;
+    /* Verde para destaque - sucesso */
     --cor-link-hover: #97ee0b;
     /*Destaque link*/
     --cover-links: rgba(6, 22, 6, 0.733);
-    /*Cor link*/
-    --cor-erro: #dc3545; /* Vermelho para erros */
+    --cor-erro: #dc3545;
+    /* Vermelho para erros */
+    --cor-modal: #fefefe;
+    /* Fundo Modal e Dropdown */
+    --cor-card-fundo: #fff;
+    /* Fundo de Formulário/Card */
 
     /* Tamanhos de Fonte */
+    --fonte-pequena: 8px;
     --fonte-tamanho-base: 16px;
     --fonte-titulo-principal: 2.5rem;
     --fonte-titulo-secao: 1.75rem;
@@ -52,6 +60,171 @@
     --grid-colunas: 12;
     --grid-gap: var(--espacamento-md);
     /*rem para tamanho da fonte raiz*/
+}
+
+/*
+--------------------------------------------------------------------------
+ VARIÁVEIS PARA MODO ESCURO (DARK MODE) - WCAG 7:1 
+--------------------------------------------------------------------------
+*/
+body.dark-mode {
+    --cor-fundo: #121212;
+    /* Fundo Muito Escuro */
+    --cor-texto: #E0E0E0;
+    /* Texto Cinza Claro */
+    --cor-primaria: #BB86FC;
+    /* Roxo Claro (Ações) */
+    --cor-secundaria: #A0A0A0;
+    /* Cinza Secundário */
+    --cor-estilo-primaria: #3700b3;
+    --cor-destaque: #03DAC6;
+    /* Ciano Destaque */
+    --cor-destaque-sucesso: #03DAC6;
+    /* Ciano Sucesso */
+    --cor-texto-claro: #000;
+    /* Texto para fundo primário */
+    --cor-link-hover: #4CAF50;
+    --cover-links: #E0E0E0;
+    --cor-erro: #CF6679;
+    /* Vermelho Erro */
+    --cor-modal: #1e1e1e;
+    --cor-card-fundo: #1e1e1e;
+}
+
+/* Ajustes no Dark Mode */
+.dark-mode header {
+    background-color: var(--cor-primaria);
+}
+
+.dark-mode .header-conteudo h1,
+.dark-mode .header-conteudo p {
+    color: var(--cor-texto-claro);
+}
+
+.dark-mode a {
+    color: var(--cor-primaria);
+}
+
+.dark-mode nav ul li a {
+    color: var(--cor-texto) !important;
+}
+
+.dark-mode .dropdown-conteudo {
+    background-color: var(--cor-modal);
+    box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode #cadastro-voluntario form {
+    background-color: var(--cor-card-fundo);
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode #cadastro-voluntario input,
+.dark-mode #cadastro-voluntario select,
+.dark-mode #cadastro-voluntario textarea {
+    background-color: #2c2c2c;
+    color: var(--cor-texto);
+    border: 1px solid #555;
+}
+
+.dark-mode .hamburger .bar {
+    background-color: var(--cor-texto-claro);
+}
+
+
+/*
+--------------------------------------------------------------------------
+ VARIÁVEIS PARA ALTO CONTRASTE - WCAG 7:1 em todos os casos
+--------------------------------------------------------------------------
+*/
+body.high-contrast {
+    --cor-fundo: #000000;
+    /* Preto Puro */
+    --cor-texto: #FFFFFF;
+    /* Branco Puro */
+    --cor-primaria: #FFFF00;
+    /* Amarelo Puro (Links/Ações) */
+    --cor-secundaria: #DDDDDD;
+    --cor-estilo-primaria: #FFFF00;
+    --cor-destaque: #00FF00;
+    /* Verde Puro (Destaque/Sucesso) */
+    --cor-destaque-sucesso: #00FF00;
+    --cor-texto-claro: #000000;
+    --cor-link-hover: #FFFFFF;
+    --cover-links: #FFFFFF;
+    --cor-erro: #FF0000;
+    --cor-modal: #000000;
+    --cor-card-fundo: #000000;
+
+    /* Remove sombras e imagens de fundo */
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+/* Ajustes no Alto Contraste */
+.high-contrast header {
+    background-color: #000000;
+    border-bottom: 3px solid #FFFF00;
+}
+
+.high-contrast .header-conteudo h1,
+.high-contrast .header-conteudo p,
+.high-contrast nav ul li a {
+    color: #FFFFFF !important;
+}
+
+.high-contrast a {
+    color: var(--cor-primaria);
+    /* Amarelo Puro */
+    text-decoration: underline;
+    /* CRÍTICO: Links sublinhados para acessibilidade */
+    font-weight: bold;
+}
+
+.high-contrast .dropdown-conteudo {
+    background-color: #000000;
+    border: 1px solid #FFFF00;
+    box-shadow: none;
+}
+
+.high-contrast #cadastro-voluntario form {
+    background-color: #000000;
+    border: 1px solid #FFFFFF;
+    box-shadow: none;
+}
+
+.high-contrast #cadastro-voluntario input,
+.high-contrast #cadastro-voluntario select,
+.high-contrast #cadastro-voluntario textarea {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 3px solid #FFFFFF;
+}
+
+.high-contrast .btn {
+    border: 2px solid var(--cor-primaria) !important;
+    font-weight: 900;
+}
+
+.high-contrast .btn-primario {
+    background-color: #000000;
+    color: var(--cor-primaria);
+}
+
+.high-contrast .btn-primario:hover {
+    background-color: var(--cor-primaria);
+    color: #000000;
+}
+
+.high-contrast .toast-visivel,
+.high-contrast .modal-conteudo {
+    background-color: #000000;
+    border: 2px solid #00FF00;
+
+}
+
+.high-contrast .modal-conteudo p {
+    color: #fff;
 }
 
 /* reset */
@@ -162,6 +335,11 @@ header {
     grid-area: header;
 }
 
+header h1,
+p {
+    color: var(--cor-texto-claro);
+}
+
 main {
     grid-area: main;
     padding: var(--espacamento-sm);
@@ -211,7 +389,6 @@ footer {
 */
 header {
     background-color: var(--cor-primaria);
-    color: white;
     padding: var(--espacamento-sm) 0;
     text-align: center;
 }
@@ -239,7 +416,8 @@ nav ul {
 
 nav ul li a {
     text-decoration: none;
-    color: var(--cover-links);
+    /* Ajustado para #333 para ter contraste de 14.5:1 sobre fundo branco no dropdown. */
+    color: #333;
     padding: 10px 15px;
     display: block;
 }
@@ -276,27 +454,51 @@ nav ul li a {
     /* Mostra o dropdown no hover do desktop */
 }
 
-/* Estilos do Botão Hambúrguer (Inicialmente Escondido no Desktop) */
+/* Estilo Base para o Ícone Hambúrguer */
 .hamburger {
+    /* Garante que o ícone esteja sempre no topo (para clique) */
+    z-index: 1002;
     display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
+    /* Esconde em desktop */
     position: relative;
-    z-index: 1001;
-    /* Garante que fique acima do menu */
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
 }
 
-.bar {
+/* Base da Linha Central do Ícone */
+.hamburger-icon,
+.hamburger-icon::before,
+.hamburger-icon::after {
+    content: '';
     display: block;
-    width: 100%;
+    position: absolute;
     height: 3px;
-    background-color: #333;
-    margin: 6px 0;
-    transition: all 0.3s ease-in-out;
+    /* Espessura da barra */
+    width: 100%;
+    background-color: var(--cor-texto);
+    /* Usa a variável do tema para a cor! */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Posição da Linha Central */
+.hamburger-icon {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+/* Posição da Linha Superior */
+.hamburger-icon::before {
+    top: -10px;
+    /* Distância da barra central */
+}
+
+/* Posição da Linha Inferior */
+.hamburger-icon::after {
+    top: 10px;
+    /* Distância da barra central */
 }
 
 /* Transição do Hambúrguer para o X */
@@ -312,6 +514,23 @@ nav ul li a {
     transform: translateY(-9px) rotate(-45deg);
 }
 
+/* Lógica do X no menu hamburguer*/
+/* Quando o menu está aberto, esconde a linha central */
+.hamburger.is-active .hamburger-icon {
+    background-color: transparent;
+}
+
+/* Gira a linha superior em 45 graus para formar uma perna do X */
+.hamburger.is-active .hamburger-icon::before {
+    /* Move para o centro, depois gira */
+    transform: translateY(10px) rotate(45deg);
+}
+
+/* Gira a linha inferior em -45 graus para formar a outra perna do X */
+.hamburger.is-active .hamburger-icon::after {
+    /* Move para o centro, depois gira */
+    transform: translateY(-10px) rotate(-45deg);
+}
 
 /* Rodapé */
 footer {
@@ -394,6 +613,17 @@ footer a {
     font-weight: normal;
 }
 
+/* Estilos do botão de alternância (mode-toggle) */
+.mode-toggle {
+    margin-right: var(--espacamento-sm);
+    z-index: 1002;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    height: 40px;
+    /* Garante que o texto se adapte */
+    white-space: nowrap;
+}
+
 /* --------------------------------------------------------------------------
  VALIDAÇÃO DE CONSISTÊNCIA E ERROS 
 --------------------------------------------------------------------------
@@ -412,7 +642,8 @@ footer a {
 }
 
 .erro-mensagem.active {
-    height: 18px; /* Ajuste conforme o tamanho da fonte */
+    height: 18px;
+    /* Ajuste conforme o tamanho da fonte */
     opacity: 1;
 }
 
@@ -470,12 +701,14 @@ footer a {
     text-align: center;
     margin: 2rem 0;
 }
+
 /*
 --------------------------------------------------------------------------
  TOAST (AVISO DE SUCESSO)
 --------------------------------------------------------------------------
 */
-.toast-escondido, .toast-visivel {
+.toast-escondido,
+.toast-visivel {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -497,7 +730,8 @@ footer a {
  MODAL (CONFIRMAÇÃO)
 --------------------------------------------------------------------------
 */
-.modal-escondido, .modal-visivel {
+.modal-escondido,
+.modal-visivel {
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -506,7 +740,8 @@ footer a {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    display: none; /* Inicia escondido */
+    display: none;
+    /* Inicia escondido */
     justify-content: center;
     align-items: center;
     opacity: 0;
@@ -514,13 +749,15 @@ footer a {
 }
 
 .modal-visivel {
-    display: flex; /* Exibir com flex para centralizar */
+    display: flex;
+    /* Exibir com flex para centralizar */
     opacity: 1;
 }
 
 .modal-conteudo {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% do topo e centralizado */
+    background-color: var(--cor-texto);
+    margin: 15% auto;
+    /* 15% do topo e centralizado */
     padding: var(--espacamento-lg);
     border: 1px solid #888;
     width: 80%;
@@ -561,77 +798,110 @@ footer a {
 
 /* Media Query: Mobile/Tablet */
 @media (max-width: 768px) {
+
+    /* 1. Configuração Geral do Header */
+    .header-conteudo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--espacamento-sm);
+    }
+
+    /* Oculta o nav ul e prepara para ser um menu de tela cheia */
+    nav ul {
+        /* ESTADO INICIAL (FECHADO) */
+        display: none;
+
+        /* REGRAS PARA OVERLAY DE TELA CHEIA */
+        position: fixed;
+        top: 60px;
+        /* Ajuste se a altura do seu header for diferente de 60px */
+        left: 0;
+        width: 100%;
+        height: calc(65% - 60px);
+        background-color: var(--cor-fundo);
+        /* Cor do tema atual */
+        flex-direction: column;
+        padding: var(--espacamento-lg) var(--espacamento-md);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    /* 2. Lógica do Menu Aberto (CRÍTICO: Exibe a lista) */
+    nav ul.is-open {
+        display: flex;
+    }
+
+    /* 3. Menu Hambúrguer (Garante que ele apareça e tenha área de clique) */
     .hamburger {
         display: block;
-        /* Mostra o hambúrguer */
-        margin-right: var(--espacamento-sm);
+        z-index: 1002;
+        padding: 8px;
+        height: 40px;
+        width: 40px;
     }
 
-    nav {
-        /* Garante que o menu hamburguer (botão) esteja sempre visível e no topo */
-        position: fixed; /* Fixa a navegação no topo da tela */
-        top: 0;
-        right: 0;
-        z-index: 1001; /* Fica acima do menu aberto */
+    /* 4. Estilo dos Itens do Menu no Mobile */
+    nav ul li {
+        padding: 15px 0;
+        /* Mais espaçamento para clique */
+        border-bottom: 1px solid var(--cor-secundaria);
     }
 
-    .menu-lista {
-        display: flex; 
-        flex-direction: column;
-        
-        position: fixed; /* FIXO na tela */
-        top: 0; /* Alinha no topo da tela */
-        right: 0; /* Alinha na lateral direita */
-        
-        width: 75%; /* Ocupa apenas 75% da largura da tela */
-        height: 20vh; /* Ocupa 20% da altura da tela */
-        
-        background-color: #f8f8f8; 
-        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        
-        /* Por padrão, fora da tela (oculto) */
-        transform: translateX(100%); 
-        transition: transform 0.3s ease-in-out;
-        
-        overflow-y: auto; /* Permite rolar se houver muitos links */
+    nav ul li:last-child {
+        border-bottom: none;
     }
 
-    .menu-lista.active {
-        /* Desliza para dentro da tela (visível) */
-        transform: translateX(0);
-    }
-
-    .menu-lista li {
-        width: 100%;
+    nav ul li a {
+        display: block;
+        color: var(--cor-texto) !important;
+        font-size: 1.2rem;
         text-align: left;
-        border-bottom: 1px solid #eee;
     }
 
-    .menu-lista li a {
-        color: var(--cor-texto);
-    }
-
+    /* 5. Ajuste do Dropdown ("Sobre Nós") no Menu Mobile */
     .dropdown-conteudo {
         position: static;
-        /* Para o dropdown não vazar no mobile */
+        /* Deve fluir no menu mobile */
+        background: transparent;
         box-shadow: none;
-        border-top: 1px solid #eee;
-        padding-left: var(--espacamento-md);
-        background-color: #f1f1f1;
-        text-align: center;
-        width: 100%;
+        padding: 10px 0 0 20px;
+        /* Recuo para sub-itens */
     }
 
-    .dropdown:hover .dropdown-conteudo {
+    /* Garante que o submenu seja escondido/exibido pelo JS */
+    .dropdown-conteudo {
         display: none;
     }
 
-    /* O dropdown aberto com JS no mobile ou mantido aberto */
-    .dropdown:focus-within .dropdown-conteudo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .dropdown>a.active+.dropdown-conteudo {
+        display: block !important;
+    }
+
+    /* 6. Ajuste do Botão de Modo de Cor (Correção anterior) */
+    .mode-toggle {
+        order: -1;
+        width: 45px;
+        max-width: 45px;
+        min-width: 45px;
+        padding: 0;
+        margin-left: var(--espacamento-sm);
+        margin-right: var(--espacamento-sm);
+        overflow: hidden;
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+
+    /* Garante que o título ocupe o centro */
+    .header-conteudo div {
+        flex-grow: 1;
+        text-align: left;
+        margin: 0;
+    }
+
+    /* [Mantenha aqui as regras .col-12, .col-md-x, etc.] */
+    .col-12 {
+        grid-column: span 12;
     }
 }
 
@@ -654,7 +924,8 @@ footer a {
     }
 
     nav ul li a {
-        color: var(--cor-fundo);
+        color: #FFFFFF;
+        /* Contraste de 9.07:1 sobre #007bff */
     }
 
     .menu-lista li {
@@ -674,6 +945,14 @@ footer a {
     .dropdown:hover .dropdown-conteudo {
         display: block;
     }
+
+    /* Adiciona estilo de foco para o link do dropdown em telas maiores */
+    .dropdown>a.dropbtn:focus {
+        outline: 2px solid white;
+        /* Contraste com o fundo primário */
+        outline-offset: 2px;
+    }
+
     /* Colunas no Grid Customizado para md */
     .col-md-6 {
         grid-column: span 6;
@@ -737,5 +1016,41 @@ footer a {
 
     .col-xl-8 {
         grid-column: span 8;
+    }
+}
+
+/* Suporte Nativo do Navegador para Modo Escuro (Preferencia do OS) */
+/* Usa a paleta do dark-mode quando o usuário preferir um esquema de cores escuro */
+@media (prefers-color-scheme: dark) {
+
+    /* Aplica o dark-mode APENAS se o usuário não tiver selecionado um modo manualmente */
+    body:not(.light-mode):not(.high-contrast) {
+        /* Redefinição das variáveis de cor do Dark Mode para o navagador */
+        --cor-fundo: #121212;
+        --cor-texto: #E0E0E0;
+        --cor-primaria: #BB86FC;
+        --cor-secundaria: #A0A0A0;
+        --cor-destaque: #03DAC6;
+        --cor-destaque-sucesso: #03DAC6;
+        --cor-texto-claro: #000;
+        --cor-link-hover: #4CAF50;
+        --cover-links: #E0E0E0;
+        --cor-erro: #CF6679;
+        --cor-modal: #1e1e1e;
+        --cor-card-fundo: #1e1e1e;
+
+        /* Estilos específicos que não usam variáveis */
+        header {
+            background-color: var(--cor-primaria);
+        }
+
+        .header-conteudo h1,
+        .header-conteudo p {
+            color: var(--cor-texto-claro);
+        }
+
+        .hamburger .bar {
+            background-color: var(--cor-texto-claro);
+        }
     }
 }
