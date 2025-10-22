@@ -2,15 +2,27 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // =========================================================================
+    // VARIÁVEIS DE ACESSIBILIDADE E UTILIDADE
+    // =========================================================================
+    const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+    let lastFocusedElement = null;
+
+    // VARIÁVEIS DE MODO DE COR 
+    const modeToggle = document.getElementById('mode-toggle');
+    const body = document.body;
+    const MODES = ['light-mode', 'dark-mode', 'high-contrast'];
+
+    // CONTAINER PRINCIPAL DA APLICAÇÃO (SPA)
+    const appContentContainer = document.getElementById('app-content-container');
+
+    // VARIÁVEL DE CONTROLE
+    let alertShown = false; // Variável de controle global para Intersection Observer
+
+    // =========================================================================
     // TEMPLATES JAVASCRIPT E LÓGICA SPA (SINGLE PAGE APPLICATION)
     // =========================================================================
 
-    // CONTAINER PRINCIPAL DA APLICAÇÃO
-    const appContentContainer = document.getElementById('app-content-container');
-
-    // Mapeamento dos Templates (Conteúdos das Páginas - Templates JavaScript)
     const routes = {
-        // Template Inicial (index.html)
         '#inicial': `
             <section id="inicial">
                 <h2>Bem-vindo à ONG Inclusão IA</h2>
@@ -59,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </section>
         `,
 
-        // Templates Missão, Equipe e Contato (Páginas simples)
         '#missao': `
             <section id="missao-conteudo">
                 <h2>Nossa Missão</h2>
@@ -90,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </section>
         `,
 
-        // Template Projetos Sociais (projetos-sociais.html)
         '#projetos-sociais': `
             <section id="projetos">
                 <h2>Projetos e Iniciativas Sociais</h2>
@@ -156,7 +166,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </section>
         `,
 
-        // Template Cadastro (cadastro.html) - Inclui placeholders para erros
         '#cadastro': `
             <section id="cadastro-voluntario">
                 <h2>Faça Seu Cadastro</h2>
@@ -229,54 +238,13 @@ document.addEventListener('DOMContentLoaded', function () {
         `
     };
 
-    // Função de Roteamento SPA (DOM Manipulation)
-    function router() {
-        // Pega o hash da URL (ex: #cadastro, #missao). Usa #inicial como padrão.
-        const path = window.location.hash || '#inicial';
-        const template = routes[path];
-
-        if (template && appContentContainer) {
-            // Injeta o novo conteúdo
-            appContentContainer.innerHTML = template;
-
-            // Garante que a página inicie no topo após o carregamento
-            window.scrollTo(0, 0);
-
-            // Atualiza o título da página
-            const pageTitle = path.substring(1).split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
-            document.title = `ONG Inclusão IA - ${pageTitle || 'Inicial'}`;
-
-            // Se a rota for o '#cadastro', inicializa a lógica específica do formulário
-            if (path === '#cadastro') {
-                initializeFormLogic();
-            }
-        } else if (appContentContainer) {
-            // Rota não encontrada (404)
-            appContentContainer.innerHTML = `
-                <section id="erro-404" style="text-align: center; padding: 50px;">
-                    <h2>Erro 404 - Página Não Encontrada</h2>
-                    <p>A página que você está procurando não existe. Tente voltar para a <a href="#inicial">Página Inicial</a>.</p>
-                </section>
-            `;
-            document.title = 'ONG Inclusão IA - 404';
-        }
-    }
-
-    // Ouve a mudança de hash na URL (navegação da SPA)
-    window.addEventListener('hashchange', router);
-
-    // Carrega a página inicial ao carregar o DOM
-    router();
-
     // =========================================================================
     // FUNÇÕES DE UTILIDADE E VALIDAÇÃO
     // =========================================================================
 
-    // Função para validar CPF (Algoritmo básico)
     function validarCPF(cpf) {
         cpf = cpf.replace(/[^\d]/g, "");
         if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-
         let soma;
         let resto;
         soma = 0;
@@ -284,17 +252,14 @@ document.addEventListener('DOMContentLoaded', function () {
         resto = (soma * 10) % 11;
         if ((resto === 10) || (resto === 11)) resto = 0;
         if (resto !== parseInt(cpf.substring(9, 10))) return false;
-
         soma = 0;
         for (let i = 1; i <= 10; i++) soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
         resto = (soma * 10) % 11;
         if ((resto === 10) || (resto === 11)) resto = 0;
         if (resto !== parseInt(cpf.substring(10, 11))) return false;
-
         return true;
     }
 
-    // Função para aplicar máscara de CPF (XXX.XXX.XXX-XX)
     function maskCPF(value) {
         value = value.replace(/\D/g, "");
         value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -303,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return value;
     }
 
-    // Função para aplicar máscara de Telefone ((XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
     function maskTelefone(value) {
         value = value.replace(/\D/g, "");
         if (value.length > 11) value = value.substring(0, 11);
@@ -314,62 +278,98 @@ document.addEventListener('DOMContentLoaded', function () {
         return value;
     }
 
+    // --- LÓGICA DE MODO DE COR (CORRIGIDA) ---
 
-    // =========================================================================
-    // SISTEMA DE VERIFICAÇÃO DE CONSISTÊNCIA DE DADOS EM FORMULÁRIOS
-    // =========================================================================
+    function updateToggleText(mode) {
+        if (!modeToggle) return;
 
-    // Objeto para armazenar as referências do formulário
-    let formElements = {};
-
-    function setupValidationListeners() {
-        const { formulario, cpfInput, telefoneInput, inputs } = formElements;
-
-        if (!formulario) return;
-
-        // Adiciona a máscara e validação em tempo real aos campos
-        cpfInput.addEventListener('input', (e) => {
-            e.target.value = maskCPF(e.target.value);
-            validateField(e.target);
-        });
-
-        telefoneInput.addEventListener('input', (e) => {
-            e.target.value = maskTelefone(e.target.value);
-            validateField(e.target);
-        });
-
-        const allFields = [...inputs, formElements.interesseInput]; // Inclui o select
-
-        allFields.forEach(input => {
-            // Valida ao sair do campo (blur)
-            input.addEventListener('blur', (e) => {
-                validateField(e.target);
-            });
-            // Limpa o erro ao digitar (input)
-            input.addEventListener('input', (e) => {
-                clearError(e.target.id);
-            });
-        });
-
-        // Evento de SUBMIT principal do formulário
-        formulario.addEventListener('submit', handleFormSubmit);
+        let text = '';
+        switch (mode) {
+            case 'dark-mode':
+                text = '🌙 Modo Escuro';
+                break;
+            case 'high-contrast':
+                text = '✨ Alto Contraste';
+                break;
+            case 'light-mode':
+            default:
+                text = '☀️ Modo Claro';
+                break;
+        }
+        modeToggle.textContent = text;
+        // ARIA: Atualiza aria-label para leitores de tela
+        modeToggle.setAttribute('aria-label', `Alternar Modo de Cor: Atualmente ${mode.replace('-', ' ')}`);
     }
 
-    // Função de Exibição de Erro (DOM Manipulation)
+    function toggleColorMode() {
+        // Pega o modo atual, ou assume 'light-mode'
+        let currentMode = MODES.find(mode => body.classList.contains(mode)) || 'light-mode';
+
+        // Determina o próximo modo na sequência (light -> dark -> high-contrast -> light)
+        let currentIndex = MODES.indexOf(currentMode);
+        let nextIndex = (currentIndex + 1) % MODES.length;
+        let nextMode = MODES[nextIndex];
+
+        // 1. Remove todas as classes de modo
+        body.classList.remove(...MODES);
+
+        // 2. Adiciona a classe do próximo modo, garantindo que 'light-mode' seja adicionada se for o próximo
+        if (nextMode !== 'light-mode') {
+            body.classList.add(nextMode);
+        } else {
+            // Se for "light-mode", adiciona explicitamente para sobrepor a preferência do sistema operacional
+            body.classList.add('light-mode');
+        }
+
+        // 3. Salva a preferência
+        localStorage.setItem('color-mode', nextMode);
+
+        // 4. Atualiza o texto do botão
+        updateToggleText(nextMode);
+    }
+
+    function applySavedMode() {
+        let savedMode = localStorage.getItem('color-mode');
+
+        if (savedMode && MODES.includes(savedMode)) {
+            body.classList.remove(...MODES); // Remove qualquer modo existente (incluindo o light-mode)
+            if (savedMode !== 'light-mode') {
+                body.classList.add(savedMode);
+            } else {
+                body.classList.add('light-mode'); // Adiciona light-mode para sobrepor prefers-color-scheme: dark
+            }
+        } else {
+            // Se não houver preferência salva, verifica o sistema operacional
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // Se o navegador/OS estiver em dark, define 'dark-mode' como inicial (mas deixa o CSS lidar com a classe)
+                savedMode = 'dark-mode';
+            } else {
+                savedMode = 'light-mode';
+            }
+        }
+
+        // Garante que o texto inicial do botão esteja correto
+        updateToggleText(savedMode);
+    }
+
+    // --- FUNÇÕES DE EXIBIÇÃO DE MENSAGENS E ERROS ---
     function displayError(fieldId, message) {
         const errorElement = document.getElementById(`erro-${fieldId}`);
         const inputElement = document.getElementById(fieldId);
 
         if (errorElement) {
             errorElement.textContent = message;
-            errorElement.classList.add('active'); // Adiciona classe para mostrar no CSS
+            errorElement.classList.add('active');
         }
         if (inputElement) {
-            inputElement.classList.add('input-error'); // Adiciona estilo de erro ao input
+            inputElement.classList.add('input-error');
+            // ARIA: Indica que o campo é inválido
+            inputElement.setAttribute('aria-invalid', 'true');
+            // ARIA: Associa o campo à sua mensagem de erro
+            inputElement.setAttribute('aria-describedby', `erro-${fieldId}`);
         }
     }
 
-    // Função de Limpeza de Erro (DOM Manipulation)
     function clearError(fieldId) {
         const errorElement = document.getElementById(`erro-${fieldId}`);
         const inputElement = document.getElementById(fieldId);
@@ -380,168 +380,72 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (inputElement) {
             inputElement.classList.remove('input-error');
+            // ARIA: Remove os atributos de erro
+            inputElement.removeAttribute('aria-invalid');
+            inputElement.removeAttribute('aria-describedby');
         }
     }
 
-    // Função principal de validação de campo
-    function validateField(input) {
-        clearError(input.id);
-        const value = input.value.trim();
-        const fieldName = input.id;
-        let isValid = true;
-        let errorMessage = '';
-
-        // Validação de Campo Obrigatório
-        if (input.hasAttribute('required') && !value) {
-            isValid = false;
-            errorMessage = 'Este campo é obrigatório.';
-        }
-
-        // Validação Específica (apenas se não estiver vazio)
-        if (isValid && value) {
-            switch (fieldName) {
-                case 'nome':
-                    if (value.length < 3) {
-                        isValid = false;
-                        errorMessage = 'O nome deve ter no mínimo 3 caracteres.';
-                    }
-                    break;
-                case 'email':
-                    // Regex simples para validação de email
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(value)) {
-                        isValid = false;
-                        errorMessage = 'O e-mail informado é inválido.';
-                    }
-                    break;
-                case 'telefone':
-                    // Verifica se o telefone está no formato de máscara esperado (10 ou 11 dígitos)
-                    const phoneLength = value.replace(/\D/g, "").length;
-                    if (phoneLength < 10 || phoneLength > 11) {
-                        isValid = false;
-                        errorMessage = 'Telefone inválido. Use o formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX.';
-                    }
-                    break;
-                case 'cpf':
-                    if (!validarCPF(value)) {
-                        isValid = false;
-                        errorMessage = 'O CPF informado é inválido.';
-                    }
-                    break;
-                case 'interesse':
-                    if (value === '') {
-                        isValid = false;
-                        errorMessage = 'Selecione uma opção de interesse.';
-                    }
-                    break;
-            }
-        }
-
-        if (!isValid) {
-            displayError(fieldName, errorMessage);
-        }
-        return isValid;
-    }
-
-    // Função para validar TODOS os campos
-    function validateAllFields() {
-        let isFormValid = true;
-        const allFields = [
-            formElements.nomeInput,
-            formElements.emailInput,
-            formElements.telefoneInput,
-            formElements.cpfInput,
-            formElements.interesseInput
-        ];
-
-        allFields.forEach(input => {
-            // A função validateField já exibe o aviso de preenchimento incorreto
-            if (!validateField(input)) {
-                isFormValid = false;
-            }
-        });
-
-        return isFormValid;
-    }
-
-    // Função de tratamento de SUBMIT
-    function handleFormSubmit(e) {
-        e.preventDefault(); // Evita o envio padrão da página
-
-        if (validateAllFields()) {
-            // Se o formulário for válido, simula o envio e mostra o toast
-            console.log('Formulário Válido. Simulação de envio...');
-            formElements.formulario.reset();
-            mostrarToast();
-
-        } else {
-            console.log('Formulário Inválido. Corrija os erros.');
-            // Rola para o primeiro campo com erro
-            const firstErrorInput = document.querySelector('.input-error');
-            if (firstErrorInput) {
-                firstErrorInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-    }
-
-    // =========================================================================
-    // INICIALIZAÇÃO DE FORMULÁRIO E OUTROS (DOM Manipulation)
-    // =========================================================================
-
-    function initializeFormLogic() {
-        // Redefine as referências do DOM para o novo conteúdo injetado
-        formElements.formulario = document.getElementById('formulario');
-        formElements.toast = document.getElementById('toast-sucesso');
-        formElements.modal = document.getElementById('modal-confirmacao');
-        formElements.btnConfirmar = document.getElementById('btnConfirmarLimpeza');
-        formElements.btnCancelar = document.getElementById('btnCancelarLimpeza');
-        formElements.fecharModalTop = document.getElementById('fechar-modal-top');
-        formElements.btnLimpar = document.getElementById('btnLimpar'); // Botão dentro do template
-        formElements.targetElement = document.getElementById('voluntario');
-
-        // Campos do Formulário
-        formElements.nomeInput = document.getElementById('nome');
-        formElements.emailInput = document.getElementById('email');
-        formElements.telefoneInput = document.getElementById('telefone');
-        formElements.cpfInput = document.getElementById('cpf');
-        formElements.interesseInput = document.getElementById('interesse');
-
-        // Coletar todos os inputs para validação
-        formElements.inputs = [formElements.nomeInput, formElements.emailInput, formElements.telefoneInput, formElements.cpfInput];
-
-        // Chama o setup de listeners de validação e máscaras
-        setupValidationListeners();
-
-        // Configura o Modal
-        setupModalListeners();
-
-        // Configura o Observer (Alert) - Aviso para o campo "Interesse"
-        setupIntersectionObserver();
-    }
-
-    // =========================================================================
-    // FUNÇÕES DE COMPONENTES EXISTENTES (TOAST, MODAL, MENU e OBSERVER)
-    // =========================================================================
-
-    // --- Toast de Sucesso ---
-    function mostrarToast() {
+    function showToast() {
         const toast = document.getElementById('toast-sucesso');
         if (toast) {
             toast.classList.remove('toast-escondido');
             toast.classList.add('toast-visivel');
-            setTimeout(() => {
-                toast.classList.remove('toast-visivel');
-                toast.classList.add('toast-escondido');
-            }, 5000);
         }
     }
 
-    // --- Lógica do Modal ---
+    function hideToast() {
+        const toast = document.getElementById('toast-sucesso');
+        if (toast) {
+            toast.classList.remove('toast-visivel');
+            toast.classList.add('toast-escondido');
+        }
+    }
+
+    // --- LÓGICA DO MODAL ---
+    function handleFocusTrap(e) {
+        if (e.key !== 'Tab') return;
+
+        const modal = document.getElementById('modal-confirmacao');
+        if (!modal || modal.classList.contains('modal-escondido')) return;
+
+        const focusableModalElements = modal.querySelectorAll(focusableElementsString);
+        if (focusableModalElements.length === 0) return;
+
+        const firstFocusableElement = focusableModalElements[0];
+        const lastFocusableElement = focusableModalElements[focusableModalElements.length - 1];
+
+        // Se Shift + Tab
+        if (e.shiftKey) {
+            if (document.activeElement === firstFocusableElement) {
+                lastFocusableElement.focus();
+                e.preventDefault();
+            }
+            // Se Tab
+        } else {
+            if (document.activeElement === lastFocusableElement) {
+                firstFocusableElement.focus();
+                e.preventDefault();
+            }
+        }
+    }
+
     function mostrarModal() {
         const modal = document.getElementById('modal-confirmacao');
         if (modal) {
+            // Guarda o elemento que estava focado antes de abrir o modal
+            lastFocusedElement = document.activeElement;
+
             modal.classList.remove('modal-escondido');
             modal.classList.add('modal-visivel');
+
+            // Torna o modal focável e move o foco para ele
+            modal.setAttribute('tabindex', '-1');
+            modal.focus();
+            modal.removeAttribute('tabindex'); // Remove o tabindex após focar
+
+            // Adiciona o listener para o "Focus Trap"
+            document.addEventListener('keydown', handleFocusTrap);
         }
     }
 
@@ -550,86 +454,224 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modal) {
             modal.classList.remove('modal-visivel');
             modal.classList.add('modal-escondido');
+
+            // Remove o listener do "Focus Trap"
+            document.removeEventListener('keydown', handleFocusTrap);
+
+            // Retorna o foco para onde estava antes do modal abrir
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+                lastFocusedElement = null;
+            }
         }
     }
 
-    function limparFormulario() {
-        if (formElements.formulario) {
-            formElements.formulario.reset();
-            // Limpa todos os erros visuais
-            const errorMessages = document.querySelectorAll('#cadastro .erro-mensagem.active');
-            errorMessages.forEach(el => el.classList.remove('active'));
-            const errorInputs = document.querySelectorAll('#cadastro .input-error');
-            errorInputs.forEach(el => el.classList.remove('input-error'));
-        }
-        esconderModal();
-    }
-
-    // Configura os listeners do modal, que está estático no index.html
     function setupModalListeners() {
         const modal = document.getElementById('modal-confirmacao');
-        const btnLimpar = document.getElementById('btnLimpar'); // Referência do botão de limpeza do form na rota #cadastro
+        const btnLimpar = document.getElementById('btnLimpar');
 
         if (modal) {
-            // Reatacha os listeners estáticos do modal (botões de confirmação/cancelamento)
+            // Reatacha os listeners estáticos do modal
+            const fecharModalTop = document.getElementById('fechar-modal-top');
             const btnConfirmar = document.getElementById('btnConfirmarLimpeza');
             const btnCancelar = document.getElementById('btnCancelarLimpeza');
-            const fecharModalTop = document.getElementById('fechar-modal-top');
 
-            if (btnConfirmar && btnCancelar && fecharModalTop) {
-                btnConfirmar.onclick = limparFormulario;
-                btnCancelar.onclick = esconderModal;
-                fecharModalTop.onclick = esconderModal;
-            }
-
-            // Ouve o clique no botão "Limpar" do formulário para abrir o modal
-            if (btnLimpar) {
-                btnLimpar.onclick = mostrarModal;
-            }
-
-            // Fechar o modal clicando fora dele
-            window.onclick = function (event) {
-                if (event.target == modal) {
+            if (fecharModalTop) fecharModalTop.addEventListener('click', esconderModal);
+            if (btnCancelar) btnCancelar.addEventListener('click', esconderModal);
+            if (btnConfirmar) {
+                btnConfirmar.addEventListener('click', () => {
+                    const form = document.getElementById('formulario');
+                    if (form) form.reset();
                     esconderModal();
-                }
+                });
+            }
+        }
+
+        if (btnLimpar) {
+            btnLimpar.addEventListener('click', (e) => {
+                e.preventDefault();
+                mostrarModal();
+            });
+        }
+    }
+
+    // --- LÓGICA DE FORMULÁRIO E SPA ---
+
+    function initializeFormLogic() {
+        const form = document.getElementById('formulario');
+        if (!form) return;
+
+        const inputs = form.querySelectorAll('input, select, textarea');
+
+        // Adiciona Listeners de Máscara e Validação em Tempo Real
+        inputs.forEach(input => {
+            if (input.id === 'cpf') {
+                input.addEventListener('input', (e) => {
+                    e.target.value = maskCPF(e.target.value);
+                });
+            }
+            if (input.id === 'telefone') {
+                input.addEventListener('input', (e) => {
+                    e.target.value = maskTelefone(e.target.value);
+                });
+            }
+
+            input.addEventListener('blur', () => {
+                validateField(input);
+            });
+        });
+
+        // Submissão do Formulário
+        form.addEventListener('submit', handleFormSubmit);
+
+        // Configura Listeners do Modal
+        setupModalListeners();
+
+        // Configura Intersection Observer (para o alerta)
+        setupIntersectionObserver();
+    }
+
+    function validateField(input) {
+        const fieldId = input.id;
+        clearError(fieldId); // Limpa erros anteriores
+
+        if (input.hasAttribute('required') && !input.value.trim()) {
+            displayError(fieldId, `O campo ${input.previousElementSibling.textContent.split(' ')[0]} é obrigatório.`);
+            return false;
+        }
+
+        if (fieldId === 'cpf' && input.value.trim() && !validarCPF(input.value)) {
+            displayError(fieldId, 'CPF inválido. Verifique o número digitado.');
+            return false;
+        }
+
+        if (fieldId === 'email' && input.value.trim() && !input.checkValidity()) {
+            displayError(fieldId, 'E-mail inválido. Utilize o formato nome@dominio.com');
+            return false;
+        }
+
+        return true;
+    }
+
+    function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const inputs = form.querySelectorAll('input, select');
+        let formIsValid = true;
+
+        inputs.forEach(input => {
+            if (!validateField(input)) {
+                formIsValid = false;
+            }
+        });
+
+        if (formIsValid) {
+            showToast();
+            setTimeout(() => {
+                form.reset();
+                hideToast();
+            }, 3000);
+        } else {
+            // Foca no primeiro campo com erro
+            const firstError = form.querySelector('.input-error');
+            if (firstError) {
+                firstError.focus();
             }
         }
     }
 
+    // Função de Roteamento SPA (DOM Manipulation)
+    function router() {
+        const path = window.location.hash || '#inicial';
+        const template = routes[path];
 
-    // --- MENU RESPONSIVO ---
-    const hamburger = document.getElementById('hamburger-menu');
-    const menuLista = document.getElementById('menu-lista');
+        if (template && appContentContainer) {
+            appContentContainer.innerHTML = template;
 
-    if (hamburger && menuLista) {
+            // Move o foco para o novo conteúdo principal para leitores de tela
+            appContentContainer.setAttribute('tabindex', '-1');
+            appContentContainer.focus();
+            appContentContainer.removeAttribute('tabindex');
+
+            window.scrollTo(0, 0);
+
+            const pageTitle = path.substring(1).split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+            document.title = `ONG Inclusão IA - ${pageTitle || 'Inicial'}`;
+
+            if (path === '#cadastro') {
+                initializeFormLogic();
+            }
+        } else if (appContentContainer) {
+            appContentContainer.innerHTML = `
+                <section id="erro-404" style="text-align: center; padding: 50px;">
+                    <h2>Erro 404 - Página Não Encontrada</h2>
+                    <p>A página que você está procurando não existe. Tente voltar para a <a href="#inicial">Página Inicial</a>.</p>
+                </section>
+            `;
+            document.title = 'ONG Inclusão IA - 404';
+        }
+    }
+
+    // --- LÓGICA DO MENU HAMBÚRGUER ---
+    const hamburger = document.getElementById('hamburger');
+    const navUl = document.querySelector('nav ul');
+    const dropdown = document.querySelector('.dropdown > a');
+
+    if (hamburger) {
         hamburger.addEventListener('click', function () {
-            menuLista.classList.toggle('active');
-            hamburger.classList.toggle('is-active');
-            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
-            hamburger.setAttribute('aria-expanded', !isExpanded);
-            hamburger.setAttribute('aria-label', !isExpanded ? 'Fechar menu' : 'Abrir menu');
+            this.classList.toggle('is-active');
+            navUl.classList.toggle('is-open');
+            this.setAttribute('aria-expanded', this.classList.contains('is-active'));
+        });
+    }
+
+    if (dropdown) {
+        dropdown.addEventListener('click', function (e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            this.setAttribute('aria-expanded', this.classList.contains('active'));
+            const conteudo = this.nextElementSibling;
+            if (conteudo) {
+                conteudo.style.display = this.classList.contains('active') ? 'block' : 'none';
+            }
         });
 
-        const links = menuLista.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                // Fechar o menu ao clicar em um link (apenas em mobile)
-                if (window.innerWidth <= 768) {
-                    menuLista.classList.remove('active');
-                    hamburger.classList.remove('is-active');
-                    hamburger.setAttribute('aria-expanded', 'false');
-                    hamburger.setAttribute('aria-label', 'Abrir menu');
+        // Listener para fechar o dropdown ao perder o foco (Acessibilidade)
+        dropdown.addEventListener('focusout', function () {
+            setTimeout(() => {
+                if (!this.nextElementSibling.contains(document.activeElement)) {
+                    this.classList.remove('active');
+                    this.setAttribute('aria-expanded', 'false');
+                    if (window.innerWidth <= 768) {
+                        const conteudo = this.nextElementSibling;
+                        if (conteudo) conteudo.style.display = 'none';
+                    }
                 }
-            });
+            }, 50);
+        });
+    }
+
+    // LÓGICA PARA FECHAR O MENU AO CLICAR EM UM LINK
+    if (navUl && hamburger) {
+        navUl.addEventListener('click', function (e) {
+            // Verifica se o elemento clicado é um link (<a>)
+            if (e.target.tagName === 'A') {
+                // Fechar o menu (nav ul)
+                navUl.classList.remove('is-open');
+
+                // Resetar o botão hambúrguer para o ícone de barras
+                hamburger.classList.remove('is-active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
         });
     }
 
     // --- INTERSECTION OBSERVER (ALERT) ---
-    let alertShown = false; // Variável de controle global
 
     function setupIntersectionObserver() {
         const targetElement = document.getElementById('voluntario');
-        if (!targetElement) return; // Só configura se o elemento alvo estiver presente na página (ou seja, na rota #cadastro)
+        if (!targetElement) return;
 
         const observerOptions = {
             root: null,
@@ -639,6 +681,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const observer = new IntersectionObserver(function (entries, observer) {
             entries.forEach(entry => {
+                // SUBSTITUÍDO o alert() invasivo pela função nativa para simplificar,
+                // mas mantendo a lógica de exibição única.
                 if (entry.isIntersecting && !alertShown) {
                     alert("Ei! Que ótimo ter você conosco! Não se esqueça de preencher o campo INTERESSE, ele é obrigatório para validar o CADASTRO!");
                     alertShown = true;
@@ -648,6 +692,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }, observerOptions);
 
         observer.observe(targetElement);
+    }
+
+    // =========================================================================
+    // INICIALIZAÇÃO DA APLICAÇÃO (FIM)
+    // =========================================================================
+
+    // 1. Ouve a mudança de hash na URL (navegação da SPA)
+    window.addEventListener('hashchange', router);
+
+    // 2. Carrega a página inicial ao carregar o DOM
+    router();
+
+    // 3. Aplica o modo de cor
+    applySavedMode();
+
+    // 4. Ouve o clique no botão de alternância
+    if (modeToggle) {
+        modeToggle.addEventListener('click', toggleColorMode);
     }
 
 }); // FIM DO DOMCONTENTLOADED
